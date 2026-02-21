@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const logDrawer = document.getElementById('log-drawer');
     const logToggle = document.getElementById('log-toggle');
 
+    // --- Mobile elements ---
+    const mobileTabs = document.querySelectorAll('.mobile-tab');
+    const mainContent = document.getElementById('main-content');
+
     // --- State ---
     let problems = [];
     let selectedProblem = null;
@@ -83,6 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
         closeDetailPanel();
         landingScreen.classList.add('hidden');
         vizScreen.classList.remove('hidden');
+        // Reset mobile tabs to viz view
+        mainContent.classList.remove('mobile-show-code');
+        mobileTabs.forEach(t => t.classList.remove('active'));
+        const vizTab = document.querySelector('.mobile-tab[data-tab="viz"]');
+        if (vizTab) vizTab.classList.add('active');
     }
 
     // --- Detail panel open/close ---
@@ -333,6 +342,26 @@ document.addEventListener('DOMContentLoaded', () => {
             visualizeBtn.disabled = false;
         }
     }
+
+    // --- Mobile tab switching ---
+    mobileTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            mobileTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            if (tab.dataset.tab === 'code') {
+                mainContent.classList.add('mobile-show-code');
+            } else {
+                mainContent.classList.remove('mobile-show-code');
+                // Re-render canvas after switching back to viz
+                requestAnimationFrame(() => {
+                    if (player.currentStep && currentRenderer) {
+                        currentRenderer.render(player.currentStep);
+                    }
+                });
+            }
+        });
+    });
 
     // --- Log drawer toggle ---
     logToggle.addEventListener('click', () => {

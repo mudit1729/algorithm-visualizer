@@ -897,3 +897,218 @@ html, body {
     border-color: var(--red);
     background: rgba(243, 139, 168, 0.15);
 }
+
+/* ========================= */
+/* === MOBILE TAB BAR ====== */
+/* ========================= */
+
+#mobile-tabs {
+    display: none;              /* hidden on desktop */
+    flex-shrink: 0;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-tab {
+    flex: 1;
+    padding: 10px 0;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-dim);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.mobile-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+/* ========================= */
+/* === MOBILE RESPONSIVE === */
+/* ========================= */
+
+@media (max-width: 768px) {
+    /* --- Top bar: compact --- */
+    #top-bar {
+        height: 44px;
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .top-bar-left .logo {
+        display: none;
+    }
+
+    #current-problem-name {
+        font-size: 12px;
+    }
+
+    .top-bar-right {
+        display: none;
+    }
+
+    /* --- Mobile tabs visible --- */
+    #mobile-tabs {
+        display: flex;
+    }
+
+    /* --- Main content: full-screen tabs --- */
+    #main-content {
+        flex-direction: column;
+        position: relative;
+    }
+
+    #viz-panel {
+        min-width: 0;
+        padding: 8px;
+    }
+
+    /* When code tab is active, hide viz; when viz tab is active, hide code */
+    #main-content.mobile-show-code #viz-panel {
+        display: none;
+    }
+
+    #main-content.mobile-show-code #code-panel {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        flex: 1;
+        border-left: none;
+    }
+
+    #main-content:not(.mobile-show-code) #code-panel {
+        display: none;
+    }
+
+    /* --- Divider: hidden on mobile --- */
+    #divider {
+        display: none;
+    }
+
+    /* --- Log drawer: hidden on mobile --- */
+    #log-drawer {
+        display: none;
+    }
+
+    /* --- Code panel: compact for mobile --- */
+    #code-panel .line-number {
+        width: 32px;
+        padding-right: 8px;
+        font-size: 11px;
+    }
+
+    #code-display {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    /* --- Player bar: larger touch targets --- */
+    #player-bar {
+        height: auto;
+        padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+
+    #progress-bar-container {
+        height: 8px;
+    }
+
+    .player-controls {
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .player-left {
+        order: 2;
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    .player-center {
+        order: 1;
+        flex-basis: 100%;
+        justify-content: center;
+        margin-bottom: 2px;
+    }
+
+    .player-right {
+        order: 3;
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    /* Hide speed slider on mobile */
+    .speed-control {
+        display: none;
+    }
+
+    .player-buttons {
+        gap: 8px;
+    }
+
+    .player-buttons button {
+        width: 48px;
+        height: 44px;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+
+    #btn-play {
+        width: 60px;
+    }
+
+    #step-counter {
+        font-size: 12px;
+        min-width: auto;
+    }
+
+    /* --- Landing page: single column --- */
+    .landing-left {
+        padding: 32px 20px;
+    }
+
+    .landing-title {
+        font-size: 28px;
+    }
+
+    .landing-subtitle {
+        font-size: 14px;
+        margin-bottom: 32px;
+    }
+
+    #problem-picker {
+        gap: 28px;
+    }
+
+    .problem-card {
+        padding: 16px 18px;
+    }
+
+    .problem-card-name {
+        font-size: 15px;
+    }
+
+    .problem-card-desc {
+        display: none;
+    }
+
+    /* --- Detail panel: full width on mobile --- */
+    #detail-panel {
+        width: 100%;
+        max-width: 100vw;
+        padding: 24px 20px 20px;
+    }
+
+    /* --- Aux panel: compact on mobile --- */
+    #aux-panel-container {
+        padding: 6px 8px;
+        max-height: 80px;
+    }
+}
