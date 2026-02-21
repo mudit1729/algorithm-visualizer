@@ -38,12 +38,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRenderer = null;
     let onVizScreen = false;
     const codePanel = new CodePanel(codeDisplay);
+    const auxContainer = document.getElementById('aux-panel-container');
+    const auxRenderer = new AuxPanelRenderer(auxContainer);
 
     // --- Player ---
     const player = new Player((step, index, total, isPlaying) => {
         if (currentRenderer) {
             currentRenderer.render(step);
         }
+        auxRenderer.render(step.aux_panels || []);
         codePanel.highlightLine(step.line_number);
         stepDescription.textContent = step.description || '';
         stepCounter.textContent = `Step ${index + 1} / ${total}`;
@@ -254,6 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentRenderer = new ArrayRenderer(canvas);
             } else if (data.renderer_type === 'graph') {
                 currentRenderer = new GraphRenderer(canvas);
+            } else if (data.renderer_type === 'dsu') {
+                currentRenderer = new DSURenderer(canvas);
+            } else if (data.renderer_type === 'trie') {
+                currentRenderer = new TrieRenderer(canvas);
             }
 
             // Load code

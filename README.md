@@ -128,7 +128,7 @@ Each problem class extends `Problem` in `problems/base_problem.py` and implement
 Each step also carries:
 - `line_number` (1-indexed into `source_code()`)
 - `description`
-- `log_messages`
+- `log_messages` (rolling per-step window, capped to the latest 50 entries)
 
 ### Tracers
 `core/tracer.py` provides mutable tracer helpers:
@@ -366,4 +366,3 @@ This sequence unlocks most missing problems without repeated UI rewrites.
 - Keep `Step.line_number` in sync with `_SOURCE` line numbers.
 - Keep snapshot granularity consistent: enough to teach, not so dense that playback becomes unusable.
 - Prefer deterministic presets for reproducible demos.
-
