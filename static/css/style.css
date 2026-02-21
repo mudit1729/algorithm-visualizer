@@ -969,6 +969,13 @@ html, body {
         padding: 8px;
     }
 
+    #viz-canvas {
+        width: 100%;
+        flex: 1;
+        min-height: 0;
+        max-height: 65vh;
+    }
+
     /* When code tab is active, hide viz; when viz tab is active, hide code */
     #main-content.mobile-show-code #viz-panel {
         display: none;
