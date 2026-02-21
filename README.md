@@ -128,7 +128,7 @@ Each problem class extends `Problem` in `problems/base_problem.py` and implement
 Each step also carries:
 - `line_number` (1-indexed into `source_code()`)
 - `description`
-- `log_messages`
+- `log_messages` (rolling per-step window, capped to the latest 50 entries)
 
 ### Tracers
 `core/tracer.py` provides mutable tracer helpers:

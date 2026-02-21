@@ -11,6 +11,14 @@ from core.step import (
     GraphEdge, GraphNode, Step, TrieEdge, TrieNode,
 )
 
+MAX_LOG_MESSAGES_PER_STEP = 50
+
+
+def _windowed_logs(logs: list[str]) -> tuple[str, ...]:
+    if len(logs) <= MAX_LOG_MESSAGES_PER_STEP:
+        return tuple(logs)
+    return tuple(logs[-MAX_LOG_MESSAGES_PER_STEP:])
+
 
 class Board2DTracer:
     """Mutable 2D grid tracer. Manipulate state, then call snapshot() to freeze."""
@@ -107,7 +115,7 @@ class Board2DTracer:
             line_number=line_number,
             description=description,
             board=board,
-            log_messages=tuple(self._log),
+            log_messages=_windowed_logs(self._log),
         )
 
 
@@ -175,7 +183,7 @@ class Array1DTracer:
             line_number=line_number,
             description=description,
             array=array,
-            log_messages=tuple(self._log),
+            log_messages=_windowed_logs(self._log),
         )
 
 
@@ -387,7 +395,7 @@ class GraphTracer:
             description=description,
             graph_nodes=nodes,
             graph_edges=edges,
-            log_messages=tuple(self._log),
+            log_messages=_windowed_logs(self._log),
         )
 
 
@@ -533,7 +541,7 @@ class DSUTracer:
             line_number=line_number,
             description=description,
             dsu_nodes=dsu_nodes,
-            log_messages=tuple(self._log),
+            log_messages=_windowed_logs(self._log),
         )
 
 
@@ -721,7 +729,7 @@ class TrieTracer:
             description=description,
             trie_nodes=trie_nodes,
             trie_edges=trie_edges,
-            log_messages=tuple(self._log),
+            log_messages=_windowed_logs(self._log),
         )
 
 
