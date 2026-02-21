@@ -2,6 +2,8 @@
 
 Interactive step-through visualizer for 42 algorithm problems covering graphs, grids, union-find, tries, and more.
 
+**Live demo**: [visualized-algorithms.up.railway.app](https://visualized-algorithms.up.railway.app/)
+
 ![Landing Page](screenshots/landing.png)
 
 ## Screenshots
@@ -32,6 +34,7 @@ Interactive step-through visualizer for 42 algorithm problems covering graphs, g
 - Keyboard shortcuts: Space (play/pause), Left/Right (step), Home/End (first/last), Esc (back)
 - Resizable code panel with syntax highlighting and active-line tracking
 - Collapsible log drawer (rolling window, capped to 50 entries per step)
+- **Mobile-responsive**: swipeable Visualize/Code tabs, touch-friendly controls, proportional canvas scaling
 
 ## Quick start
 
@@ -44,12 +47,18 @@ python3 main.py
 
 Opens at `http://localhost:5050`.
 
+## Deployment
+
+Hosted on [Railway](https://railway.app) with gunicorn. Configured via `Procfile` and `runtime.txt`.
+
 ## Project structure
 
 ```text
 visualize_algo/
   main.py                     # Flask app + API
   requirements.txt
+  Procfile                    # Railway/gunicorn config
+  runtime.txt                 # Python version for Railway
   core/
     step.py                   # Step/CellState/GraphNode/GraphEdge/DSUNode/TrieNode dataclasses
     tracer.py                 # Mutable tracers -> frozen snapshots
