@@ -163,12 +163,6 @@ class DSURenderer {
             ctx.textBaseline = 'middle';
             ctx.fillText(n.label, x, y);
 
-            // Rank subscript
-            if (n.rank > 0) {
-                ctx.fillStyle = colors.rankText;
-                ctx.font = `${Math.floor(nodeRadius * 0.5)}px -apple-system, sans-serif`;
-                ctx.fillText(`r${n.rank}`, x, y + nodeRadius + 10);
-            }
         });
     }
 }
