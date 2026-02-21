@@ -91,41 +91,50 @@ document.addEventListener('DOMContentLoaded', () => {
             const trimmed = para.trim();
             if (!trimmed) continue;
 
-            // Detect example blocks (lines starting with Input:/Output:/Explanation:)
-            if (/^\s*(Input|Output|Explanation):/m.test(trimmed)) {
-                const label = trimmed.match(/^(Example\s*\d*):?/i);
-                if (label) {
-                    html += `<div class="example-label">${label[1]}</div>`;
-                    const body = trimmed.slice(label[0].length).trim();
-                    html += `<div class="example-block">${escapeHtml(body)}</div>`;
-                } else {
-                    html += `<div class="example-block">${escapeHtml(trimmed)}</div>`;
-                }
+            // Detect "Constraints:" header
+            if (/^Constraints:?\s*$/i.test(trimmed)) {
+                html += `<div class="example-label">Constraints</div>`;
                 continue;
             }
 
             // Detect constraint lists (lines starting with - or bullet)
             if (/^\s*[-•]/.test(trimmed)) {
-                const items = trimmed.split(/\n/).map(l => l.replace(/^\s*[-•]\s*/, '').trim());
-                html += '<ul class="constraint-list">' + items.map(i => `<li>${escapeHtml(i)}</li>`).join('') + '</ul>';
+                const items = trimmed.split(/\n/).map(l => l.replace(/^\s*[-•]\s*/, '').trim()).filter(Boolean);
+                html += '<ul class="constraint-list">' + items.map(i => `<li>${inlineFmt(i)}</li>`).join('') + '</ul>';
                 continue;
             }
 
-            // Detect "Constraints:" header
-            if (/^Constraints:$/i.test(trimmed)) {
-                html += `<div class="example-label">Constraints</div>`;
+            // Detect example blocks: starts with "Example N:" followed by Input:/Output: lines
+            const exMatch = trimmed.match(/^(Example\s*\d*):?\s*\n/i);
+            if (exMatch) {
+                html += `<div class="example-label">${exMatch[1]}</div>`;
+                const body = trimmed.slice(exMatch[0].length).trim();
+                // Split lines and format each
+                const lines = body.split(/\n/).map(l => inlineFmt(l.trim()));
+                html += `<div class="example-block">${lines.join('<br>')}</div>`;
+                continue;
+            }
+
+            // Check if paragraph has Input:/Output: without Example label
+            if (/^\s*(Input|Output|Explanation):/m.test(trimmed)) {
+                const lines = trimmed.split(/\n/).map(l => inlineFmt(l.trim()));
+                html += `<div class="example-block">${lines.join('<br>')}</div>`;
                 continue;
             }
 
             // Regular paragraph - apply inline formatting
-            let line = escapeHtml(trimmed);
-            // Inline code: `text`
-            line = line.replace(/`([^`]+)`/g, '<code>$1</code>');
-            // Bold: **text**
-            line = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-            html += `<p>${line}</p>`;
+            html += `<p>${inlineFmt(trimmed)}</p>`;
         }
         return html;
+    }
+
+    function inlineFmt(text) {
+        let s = escapeHtml(text);
+        // Inline code: `text`
+        s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+        // Bold: **text**
+        s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        return s;
     }
 
     function escapeHtml(text) {
