@@ -4,12 +4,30 @@ import webbrowser
 from threading import Timer
 
 from flask import Flask, jsonify, render_template, request
+from flask_compress import Compress
 
 from problems.registry import discover_problems
 
 app = Flask(__name__)
+app.config["COMPRESS_REGISTER"] = False
+app.config["COMPRESS_ALGORITHM"] = ["br", "gzip"]
+app.config["COMPRESS_LEVEL"] = 6
+app.config["COMPRESS_MIN_SIZE"] = 500
+compress = Compress(app)
 
 _problems = discover_problems()
+
+
+def _coerce_bool(value: object, default: bool = True) -> bool:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.strip().lower() in {"1", "true", "yes", "on"}
+    if isinstance(value, (int, float)):
+        return value != 0
+    return default
 
 
 @app.route("/")
@@ -36,10 +54,15 @@ def list_problems():
 
 
 @app.route("/api/run", methods=["POST"])
+@compress.compressed()
 def run_problem():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     problem_name = data.get("problem")
     params = data.get("params", {})
+    compact = _coerce_bool(data.get("compact"), default=True)
+
+    if not isinstance(params, dict):
+        return jsonify({"error": "'params' must be an object"}), 400
 
     cls = _problems.get(problem_name)
     if cls is None:
@@ -59,7 +82,7 @@ def run_problem():
         {
             "source_code": cls.source_code(),
             "renderer_type": cls.renderer_type(),
-            "steps": [s.to_dict() for s in steps],
+            "steps": [s.to_dict(compact=compact) for s in steps],
         }
     )
 

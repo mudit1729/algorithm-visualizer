@@ -177,7 +177,8 @@ class GraphRenderer {
             ctx.setLineDash([]);
 
             // Arrowhead for directed edges
-            if (e.directed) {
+            const isDirected = e.directed !== undefined ? e.directed : true;
+            if (isDirected) {
                 const arrowLen = 10;
                 const arrowAngle = Math.PI / 7;
                 let angle;

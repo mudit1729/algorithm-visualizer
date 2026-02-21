@@ -29,7 +29,9 @@ class AuxPanelRenderer {
                 if (item.selected) itemEl.classList.add('aux-selected');
                 if (item.patched) itemEl.classList.add('aux-patched');
                 if (item.error) itemEl.classList.add('aux-error');
-                itemEl.textContent = item.label || String(item.value);
+                const label = item.label ?? '';
+                const value = item.value ?? '';
+                itemEl.textContent = label || String(value);
                 itemsEl.appendChild(itemEl);
             });
 

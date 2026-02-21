@@ -1,2 +1,4 @@
 # Core web app
 Flask>=3.1,<4.0
+Flask-Compress>=1.15,<2.0
+brotli>=1.1,<2.0
