@@ -81,9 +81,11 @@ class RedundantConnection(Problem):
         preset = int(kwargs.get("preset", 1))
 
         presets = {
-            1: [[1, 2], [1, 3], [2, 3]],
-            2: [[1, 2], [2, 3], [3, 4], [1, 4], [1, 5]],
-            3: [[1, 2], [1, 3], [1, 4], [3, 4], [2, 5]],
+            # 8-node tree + 1 redundant edge (6->4 creates cycle)
+            1: [
+                [1, 2], [1, 3], [2, 4], [2, 5],
+                [3, 6], [3, 7], [5, 8], [6, 4],
+            ],
         }
 
         edges = presets.get(preset, presets[1])

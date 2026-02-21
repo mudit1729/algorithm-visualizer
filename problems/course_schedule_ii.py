@@ -80,9 +80,13 @@ class CourseScheduleII(Problem):
         preset = int(kwargs.get("preset", 1))
 
         presets = {
-            1: (4, [[1, 0], [2, 0], [3, 1], [3, 2]]),
-            2: (6, [[1, 0], [2, 0], [3, 1], [4, 2], [5, 3], [5, 4]]),
-            3: (3, [[0, 1], [1, 2], [2, 0]]),  # cycle
+            1: (
+                8,
+                [
+                    [1, 0], [2, 0], [3, 1], [4, 2],
+                    [5, 3], [5, 4], [6, 1], [7, 5], [7, 6],
+                ],
+            ),
         }
 
         num_courses, prerequisites = presets.get(preset, presets[1])

@@ -76,9 +76,17 @@ class IsBipartite(Problem):
         preset = int(kwargs.get("preset", 1))
 
         presets = {
-            1: [[1, 3], [0, 2], [1, 3], [0, 2]],  # bipartite
-            2: [[1, 2, 3], [0, 2], [0, 1, 3], [0, 2]],  # not bipartite
-            3: [[1], [0, 2], [1, 3], [2, 4], [3, 5], [4]],  # bipartite chain
+            # 8-node bipartite graph: {0,2,4,6} and {1,3,5,7}
+            1: [
+                [1, 3, 7],     # 0 -> 1,3,7
+                [0, 2, 4],     # 1 -> 0,2,4
+                [1, 5],        # 2 -> 1,5
+                [0, 4],        # 3 -> 0,4
+                [1, 3, 5],     # 4 -> 1,3,5
+                [2, 4, 6],     # 5 -> 2,4,6
+                [5, 7],        # 6 -> 5,7
+                [0, 6],        # 7 -> 0,6
+            ],
         }
 
         graph = presets.get(preset, presets[1])

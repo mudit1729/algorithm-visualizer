@@ -79,16 +79,13 @@ class WallsAndGates(Problem):
 
         grids = {
             1: [
-                [INF, -1, 0, INF],
-                [INF, INF, INF, -1],
-                [INF, -1, INF, -1],
-                [0, -1, INF, INF],
-            ],
-            2: [
-                [INF, -1, INF, 0, INF],
-                [INF, INF, INF, -1, INF],
-                [-1, INF, -1, INF, INF],
-                [INF, INF, INF, INF, 0],
+                [INF, -1,  0,  INF, INF, INF, -1 ],
+                [INF, INF, INF, -1,  INF, INF, INF],
+                [INF, -1,  INF, -1,  INF, -1,  INF],
+                [0,   -1,  INF, INF, INF, INF, INF],
+                [INF, INF, -1,  INF, -1,  INF,  0 ],
+                [INF, -1,  INF, INF, INF, INF, INF],
+                [-1,  INF, INF, 0,   -1,  INF, INF],
             ],
         }
 

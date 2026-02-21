@@ -30,23 +30,13 @@ def numIslands(grid):
 # Example grids the user can choose from via the "grid" param
 _GRIDS: dict[int, list[list[str]]] = {
     1: [
-        ["1", "1", "1", "1", "0"],
-        ["1", "1", "0", "1", "0"],
-        ["1", "1", "0", "0", "0"],
-        ["0", "0", "0", "0", "0"],
-    ],
-    2: [
-        ["1", "1", "0", "0", "0"],
-        ["1", "1", "0", "0", "0"],
-        ["0", "0", "1", "0", "0"],
-        ["0", "0", "0", "1", "1"],
-    ],
-    3: [
-        ["1", "0", "1", "1", "1"],
-        ["1", "0", "1", "0", "1"],
-        ["1", "1", "1", "0", "0"],
-        ["0", "0", "0", "1", "1"],
-        ["1", "1", "0", "0", "1"],
+        ["1", "1", "0", "0", "1", "1", "0"],
+        ["1", "1", "0", "0", "0", "1", "0"],
+        ["0", "0", "0", "1", "0", "0", "0"],
+        ["0", "1", "0", "1", "1", "0", "1"],
+        ["0", "1", "0", "0", "0", "0", "1"],
+        ["0", "0", "0", "0", "1", "0", "1"],
+        ["1", "1", "0", "0", "1", "0", "0"],
     ],
 }
 
@@ -94,12 +84,12 @@ class NumberOfIslands(Problem):
 
     @staticmethod
     def default_params() -> dict[str, object]:
-        return {"grid": 2}
+        return {"grid": 1}
 
     @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
-        grid_id = int(kwargs.get("grid", 2))
-        grid_template = _GRIDS.get(grid_id, _GRIDS[2])
+        grid_id = int(kwargs.get("grid", 1))
+        grid_template = _GRIDS.get(grid_id, _GRIDS[1])
 
         # Deep copy the grid
         grid = [row[:] for row in grid_template]
