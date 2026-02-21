@@ -122,7 +122,7 @@ class NetworkDelayTime(Problem):
             badge = "0" if i == k else "INF"
             tracer.set_node_badge(i, badge)
         tracer.log(f"dist[{k}] = 0, all others = INF")
-        snap(7, f"Initialize dist[{k}] = 0")
+        snap(8, f"Initialize dist[{k}] = 0")
 
         visited_count = 0
 
@@ -131,26 +131,26 @@ class NetworkDelayTime(Problem):
 
             if d > dist[u]:
                 tracer.log(f"Skip stale entry for node {u}")
-                snap(11, f"Skip stale node {u}")
+                snap(13, f"Skip stale node {u}")
                 continue
 
             # Process current node
             tracer.select_node(u)
             tracer.log(f"Pop node {u} with time {int(d)}")
-            snap(10, f"Pop node {u}, time = {int(d)}")
+            snap(12, f"Pop node {u}, time = {int(d)}")
 
             # Finalize node
             tracer.patch_node(u)
             tracer.deselect_node(u)
             visited_count += 1
             tracer.log(f"Finalize node {u} ({visited_count}/{n} reached)")
-            snap(12, f"Finalize node {u}")
+            snap(15, f"Finalize node {u}")
 
             # Relax outgoing edges
             for v, w in adj[u]:
                 tracer.select_edge(u, v)
                 tracer.log(f"  Examine {u}->{v} (w={w})")
-                snap(14, f"Examine {u}->{v}, w={w}")
+                snap(17, f"Examine {u}->{v}, w={w}")
 
                 new_dist = dist[u] + w
                 if new_dist < dist[v]:
@@ -162,10 +162,10 @@ class NetworkDelayTime(Problem):
                     tracer.patch_edge(u, v)
                     old_str = "INF" if old_dist == float("inf") else str(int(old_dist))
                     tracer.log(f"  Relax {v}: {old_str} -> {int(new_dist)}")
-                    snap(16, f"Relax {v}: {old_str} -> {int(new_dist)}")
+                    snap(20, f"Relax {v}: {old_str} -> {int(new_dist)}")
                 else:
                     tracer.log(f"  No improvement for {v}")
-                    snap(15, f"No relax {u}->{v}")
+                    snap(18, f"No relax {u}->{v}")
 
                 tracer.deselect_edge(u, v)
 
@@ -176,7 +176,7 @@ class NetworkDelayTime(Problem):
         ans = max(dist[1 : n + 1])
         if ans == float("inf"):
             tracer.log("Result: -1 (not all nodes reachable)")
-            snap(19, "Result: -1 (unreachable nodes)")
+            snap(20, "Result: -1 (unreachable nodes)")
         else:
             # Highlight the node with max delay
             max_node = -1
@@ -192,6 +192,6 @@ class NetworkDelayTime(Problem):
             )
             tracer.log(f"All times: {dist_str}")
             tracer.log(f"Max delay = {int(ans)} at node {max_node}")
-            snap(19, f"Answer: {int(ans)} (node {max_node} reached last)")
+            snap(20, f"Answer: {int(ans)} (node {max_node} reached last)")
 
         return steps

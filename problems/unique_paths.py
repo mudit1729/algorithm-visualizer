@@ -96,7 +96,7 @@ class UniquePaths(Problem):
             tracer.set_arrow(i, 0, "down" if i < m - 1 else "")
             tracer.patch(i, 0)
             tracer.log(f"dp[{i}][0] = 1 (only one way: straight down)")
-            snap(4, f"dp[{i}][0] = 1")
+            snap(5, f"dp[{i}][0] = 1")
 
         # Fill first row
         for j in range(1, n):
@@ -107,7 +107,7 @@ class UniquePaths(Problem):
             tracer.set_arrow(0, j, "right" if j < n - 1 else "")
             tracer.patch(0, j)
             tracer.log(f"dp[0][{j}] = 1 (only one way: straight right)")
-            snap(6, f"dp[0][{j}] = 1")
+            snap(7, f"dp[0][{j}] = 1")
 
         # Fill rest of the DP table
         for i in range(1, m):
@@ -119,7 +119,7 @@ class UniquePaths(Problem):
                 tracer.select(i - 1, j)
                 tracer.select(i, j - 1)
                 tracer.log(f"Computing dp[{i}][{j}] = dp[{i-1}][{j}] + dp[{i}][{j-1}]")
-                snap(10, f"dp[{i}][{j}] = dp[{i-1}][{j}]({dp[i-1][j]}) + dp[{i}][{j-1}]({dp[i][j-1]})")
+                snap(13, f"dp[{i}][{j}] = dp[{i-1}][{j}]({dp[i-1][j]}) + dp[{i}][{j-1}]({dp[i][j-1]})")
 
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
 
@@ -128,7 +128,7 @@ class UniquePaths(Problem):
                 tracer.set_overlay(i, j, str(dp[i][j]))
                 tracer.patch(i, j)
                 tracer.log(f"  dp[{i}][{j}] = {dp[i][j]}")
-                snap(10, f"dp[{i}][{j}] = {dp[i][j]}")
+                snap(13, f"dp[{i}][{j}] = {dp[i][j]}")
 
         # Trace one optimal path (always go right then down, or along edge)
         tracer.deselect_all()
@@ -158,6 +158,6 @@ class UniquePaths(Problem):
                     tracer.set_arrow(pr, pc, "right")
 
         tracer.log(f"Answer: {dp[m-1][n-1]} unique paths. One path highlighted.")
-        snap(12, f"Result: {dp[m-1][n-1]} unique paths")
+        snap(13, f"Result: {dp[m-1][n-1]} unique paths")
 
         return steps

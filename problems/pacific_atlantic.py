@@ -128,14 +128,14 @@ class PacificAtlantic(Problem):
             tracer.select(r, c)
 
         tracer.log(f"Pacific border: {len(pac_starts)} cells")
-        snap(16, f"Pacific border cells ({len(pac_starts)} sources)")
+        snap(17, f"Pacific border cells ({len(pac_starts)} sources)")
 
         queue: deque[tuple[int, int]] = deque(pac_starts)
         while queue:
             r, c = queue.popleft()
             tracer.deselect_all()
             tracer.select(r, c)
-            snap(8, f"Pacific BFS: process ({r},{c}) h={heights[r][c]}")
+            snap(9, f"Pacific BFS: process ({r},{c}) h={heights[r][c]}")
 
             for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nr, nc = r + dr, c + dc
@@ -146,11 +146,11 @@ class PacificAtlantic(Problem):
                             queue.append((nr, nc))
                             tracer.set_overlay(nr, nc, "P", color="#3b82f6")
                             tracer.log(f"  Pacific reaches ({nr},{nc}) h={heights[nr][nc]}")
-                            snap(14, f"Pacific reaches ({nr},{nc})")
+                            snap(15, f"Pacific reaches ({nr},{nc})")
 
         tracer.deselect_all()
         tracer.log(f"Pacific can reach {len(pacific)} cells")
-        snap(19, f"Pacific reachable: {len(pacific)} cells")
+        snap(21, f"Pacific reachable: {len(pacific)} cells")
 
         # --- Phase 2: BFS from Atlantic ---
         atlantic: set[tuple[int, int]] = set()
@@ -169,14 +169,14 @@ class PacificAtlantic(Problem):
             tracer.select(r, c)
 
         tracer.log(f"Atlantic border: {len(atl_starts)} cells")
-        snap(18, f"Atlantic border cells ({len(atl_starts)} sources)")
+        snap(20, f"Atlantic border cells ({len(atl_starts)} sources)")
 
         queue = deque(atl_starts)
         while queue:
             r, c = queue.popleft()
             tracer.deselect_all()
             tracer.select(r, c)
-            snap(8, f"Atlantic BFS: process ({r},{c}) h={heights[r][c]}")
+            snap(9, f"Atlantic BFS: process ({r},{c}) h={heights[r][c]}")
 
             for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nr, nc = r + dr, c + dc
@@ -190,11 +190,11 @@ class PacificAtlantic(Problem):
                             else:
                                 tracer.set_overlay(nr, nc, "A", color="#ef4444")
                             tracer.log(f"  Atlantic reaches ({nr},{nc}) h={heights[nr][nc]}")
-                            snap(14, f"Atlantic reaches ({nr},{nc})")
+                            snap(15, f"Atlantic reaches ({nr},{nc})")
 
         tracer.deselect_all()
         tracer.log(f"Atlantic can reach {len(atlantic)} cells")
-        snap(21, f"Atlantic reachable: {len(atlantic)} cells")
+        snap(24, f"Atlantic reachable: {len(atlantic)} cells")
 
         # --- Phase 3: Find intersection ---
         both = pacific & atlantic
@@ -203,6 +203,6 @@ class PacificAtlantic(Problem):
             tracer.patch(r, c)
 
         tracer.log(f"Cells reaching both oceans: {len(both)}")
-        snap(23, f"Result: {len(both)} cells reach both oceans")
+        snap(27, f"Result: {len(both)} cells reach both oceans")
 
         return steps

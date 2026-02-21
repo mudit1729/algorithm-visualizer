@@ -118,13 +118,13 @@ class SurroundedRegions(Problem):
             tracer.deselect_all()
             tracer.select(r, c)
             tracer.log(f"Mark ({r},{c}) as safe (border-connected)")
-            snap(8, f"Mark ({r},{c}) as safe")
+            snap(9, f"Mark ({r},{c}) as safe")
 
             board[r][c] = "S"
             tracer.set_value(r, c, "S")
             tracer.patch(r, c)
             tracer.deselect(r, c)
-            snap(9, f"({r},{c}) = 'S'")
+            snap(10, f"({r},{c}) = 'S'")
 
             dfs(r + 1, c)
             dfs(r - 1, c)
@@ -132,7 +132,7 @@ class SurroundedRegions(Problem):
             dfs(r, c - 1)
 
         tracer.log("Phase 1: Mark border-connected O cells as safe")
-        snap(14, "Phase 1: DFS from border O cells")
+        snap(16, "Phase 1: DFS from border O cells")
 
         for i in range(m):
             dfs(i, 0)
@@ -143,7 +143,7 @@ class SurroundedRegions(Problem):
 
         tracer.deselect_all()
         tracer.log("Phase 2: Capture surrounded regions")
-        snap(22, "Phase 2: Flip remaining O -> X, restore S -> O")
+        snap(25, "Phase 2: Flip remaining O -> X, restore S -> O")
 
         for i in range(m):
             for j in range(n):
@@ -162,5 +162,5 @@ class SurroundedRegions(Problem):
                     snap(27, f"Restore ({i},{j}): S -> O")
 
         tracer.log("Done!")
-        snap(28, "All surrounded regions captured")
+        snap(27, "All surrounded regions captured")
         return steps

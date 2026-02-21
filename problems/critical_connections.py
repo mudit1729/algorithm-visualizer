@@ -141,7 +141,7 @@ class CriticalConnections(Problem):
             graph.select_node(u)
             graph.set_node_badge(u, f"{disc[u]}/{low[u]}")
             graph.log(f"DFS({u}): disc={disc[u]}, low={low[u]}")
-            snap(13, f"DFS({u}): disc={disc[u]}, low={low[u]}")
+            snap(16, f"DFS({u}): disc={disc[u]}, low={low[u]}")
 
             for v in adj[u]:
                 if v == parent:
@@ -155,7 +155,7 @@ class CriticalConnections(Problem):
                     # Tree edge
                     graph.set_edge_class(*edge_key, "tree")
                     graph.log(f"  Edge {u}-{v}: tree edge, recurse")
-                    snap(19, f"Tree edge {u}-{v}")
+                    snap(22, f"Tree edge {u}-{v}")
                     graph.deselect_edge(*edge_key)
 
                     dfs(v, u)
@@ -164,33 +164,33 @@ class CriticalConnections(Problem):
                     low[u] = min(low[u], low[v])
                     graph.set_node_badge(u, f"{disc[u]}/{low[u]}")
                     graph.log(f"  Back from {v}: low[{u}] = min(low[{u}], low[{v}]) = {low[u]}")
-                    snap(20, f"Update low[{u}]={low[u]}")
+                    snap(23, f"Update low[{u}]={low[u]}")
 
                     # Check if bridge
                     if low[v] > disc[u]:
                         bridges.append((u, v))
                         graph.mark_edge_error(*edge_key)
                         graph.log(f"  BRIDGE found: {u}-{v} (low[{v}]={low[v]} > disc[{u}]={disc[u]})")
-                        snap(22, f"BRIDGE: {u}-{v}")
+                        snap(25, f"BRIDGE: {u}-{v}")
                     else:
                         # Not a bridge: patch as safe
                         graph.patch_edge(*edge_key)
                         graph.log(f"  Edge {u}-{v}: not a bridge (low[{v}]={low[v]} <= disc[{u}]={disc[u]})")
-                        snap(22, f"Safe edge {u}-{v}")
+                        snap(25, f"Safe edge {u}-{v}")
                 else:
                     # Back edge
                     graph.set_edge_class(*edge_key, "back")
                     low[u] = min(low[u], disc[v])
                     graph.set_node_badge(u, f"{disc[u]}/{low[u]}")
                     graph.log(f"  Edge {u}-{v}: back edge, low[{u}] = min(low[{u}], disc[{v}]) = {low[u]}")
-                    snap(24, f"Back edge {u}-{v}, low[{u}]={low[u]}")
+                    snap(28, f"Back edge {u}-{v}, low[{u}]={low[u]}")
                     graph.deselect_edge(*edge_key)
 
             # Done with u
             graph.deselect_node(u)
             graph.patch_node(u)
             graph.log(f"DFS({u}): finished")
-            snap(26, f"DFS({u}): finished")
+            snap(31, f"DFS({u}): finished")
 
         # Main loop
         for i in range(n):
@@ -204,5 +204,5 @@ class CriticalConnections(Problem):
         graph.deselect_all_edges()
         bridge_str = ", ".join(f"{u}-{v}" for u, v in bridges) if bridges else "none"
         graph.log(f"All bridges found: [{bridge_str}]")
-        snap(30, f"Done! Found {len(bridges)} bridges: [{bridge_str}]")
+        snap(31, f"Done! Found {len(bridges)} bridges: [{bridge_str}]")
         return steps

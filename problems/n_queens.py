@@ -100,12 +100,12 @@ class NQueens(Problem):
             # Check column
             for i in range(row):
                 tracer.select(i, col)
-                snap(6, f"Check column: row {i}, col {col}")
+                snap(7, f"Check column: row {i}, col {col}")
                 if tracer._values[i][col] == 1:
                     tracer.mark_error(i, col)
                     tracer.mark_error(row, col)
                     tracer.log(f"Column conflict at ({i}, {col})")
-                    snap(7, f"Column conflict at ({i}, {col})")
+                    snap(8, f"Column conflict at ({i}, {col})")
                     tracer.clear_all_errors()
                     tracer.deselect(i, col)
                     return False
@@ -115,12 +115,12 @@ class NQueens(Problem):
             i, j = row - 1, col - 1
             while i >= 0 and j >= 0:
                 tracer.select(i, j)
-                snap(10, f"Check diagonal: ({i}, {j})")
+                snap(11, f"Check diagonal: ({i}, {j})")
                 if tracer._values[i][j] == 1:
                     tracer.mark_error(i, j)
                     tracer.mark_error(row, col)
                     tracer.log(f"Diagonal conflict at ({i}, {j})")
-                    snap(11, f"Diagonal conflict at ({i}, {j})")
+                    snap(12, f"Diagonal conflict at ({i}, {j})")
                     tracer.clear_all_errors()
                     tracer.deselect(i, j)
                     return False
@@ -132,12 +132,12 @@ class NQueens(Problem):
             i, j = row - 1, col + 1
             while i >= 0 and j < n:
                 tracer.select(i, j)
-                snap(15, f"Check diagonal: ({i}, {j})")
+                snap(16, f"Check diagonal: ({i}, {j})")
                 if tracer._values[i][j] == 1:
                     tracer.mark_error(i, j)
                     tracer.mark_error(row, col)
                     tracer.log(f"Diagonal conflict at ({i}, {j})")
-                    snap(16, f"Diagonal conflict at ({i}, {j})")
+                    snap(17, f"Diagonal conflict at ({i}, {j})")
                     tracer.clear_all_errors()
                     tracer.deselect(i, j)
                     return False
@@ -150,7 +150,7 @@ class NQueens(Problem):
         def backtrack(row: int) -> bool:
             if row == n:
                 tracer.log("All queens placed! Solution found.")
-                snap(24, "All queens placed! Solution found.")
+                snap(26, "All queens placed! Solution found.")
                 return True
 
             for col in range(n):
@@ -158,14 +158,14 @@ class NQueens(Problem):
                 tracer.depatch_all()
                 tracer.select(row, col)
                 tracer.log(f"Try queen at ({row}, {col})")
-                snap(26, f"Try queen at ({row}, {col})")
+                snap(28, f"Try queen at ({row}, {col})")
 
                 if is_safe(row, col):
                     tracer.deselect_all()
                     tracer.set_value(row, col, 1)
                     tracer.patch(row, col)
                     tracer.log(f"Place queen at ({row}, {col})")
-                    snap(28, f"Place queen at ({row}, {col})")
+                    snap(30, f"Place queen at ({row}, {col})")
                     tracer.depatch(row, col)
 
                     if backtrack(row + 1):
@@ -176,7 +176,7 @@ class NQueens(Problem):
                     tracer.deselect_all()
                     tracer.select(row, col)
                     tracer.log(f"Remove queen from ({row}, {col})")
-                    snap(31, f"Backtrack: remove queen from ({row}, {col})")
+                    snap(34, f"Backtrack: remove queen from ({row}, {col})")
                     tracer.deselect(row, col)
                 else:
                     tracer.deselect_all()

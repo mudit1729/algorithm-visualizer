@@ -125,27 +125,27 @@ class Dijkstra(Problem):
 
             if visited[u]:
                 tracer.log(f"Skip node {u} (already visited)")
-                snap(9, f"Skip visited node {u}")
+                snap(10, f"Skip visited node {u}")
                 continue
 
             # Mark node as being processed
             tracer.select_node(u)
             tracer.log(f"Pop node {u} with dist {d}")
-            snap(8, f"Pop node {u}, dist = {d}")
+            snap(9, f"Pop node {u}, dist = {d}")
 
             # Finalize this node
             visited[u] = True
             tracer.patch_node(u)
             tracer.deselect_node(u)
             tracer.log(f"Finalize node {u}")
-            snap(10, f"Finalize node {u}")
+            snap(12, f"Finalize node {u}")
 
             # Relax edges
             for v, w in graph[u]:
                 edge_key = (u, v) if (u, v) in tracer._edge_selected else (v, u)
                 tracer.select_edge(*edge_key)
                 tracer.log(f"  Examine edge {u}-{v} (w={w})")
-                snap(12, f"Examine edge {u}-{v}, w={w}")
+                snap(14, f"Examine edge {u}-{v}, w={w}")
 
                 new_dist = dist[u] + w
                 if new_dist < dist[v]:
@@ -157,10 +157,10 @@ class Dijkstra(Problem):
                     tracer.patch_edge(*edge_key)
                     old_str = "INF" if old_dist == float("inf") else str(int(old_dist))
                     tracer.log(f"  Relax {v}: {old_str} -> {int(new_dist)}")
-                    snap(14, f"Relax {v}: {old_str} -> {int(new_dist)}")
+                    snap(16, f"Relax {v}: {old_str} -> {int(new_dist)}")
                 else:
                     tracer.log(f"  No improvement for {v}")
-                    snap(13, f"No relax {u}-{v}")
+                    snap(15, f"No relax {u}-{v}")
 
                 tracer.deselect_edge(*edge_key)
 
@@ -171,5 +171,5 @@ class Dijkstra(Problem):
             f"{i}:{int(d) if d != float('inf') else 'INF'}" for i, d in enumerate(dist)
         )
         tracer.log(f"Final distances: {dist_str}")
-        snap(17, f"Done. Distances: {dist_str}")
+        snap(19, f"Done. Distances: {dist_str}")
         return steps

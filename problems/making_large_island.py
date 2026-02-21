@@ -169,7 +169,7 @@ class MakingLargeIsland(Problem):
 
         # Phase 1: Union all adjacent 1-cells
         board.log("Phase 1: Build islands with Union-Find")
-        snap(21, "Phase 1: union adjacent land cells")
+        snap(24, "Phase 1: union adjacent land cells")
 
         for r in range(n):
             for c in range(n):
@@ -202,7 +202,7 @@ class MakingLargeIsland(Problem):
 
         island_count = len(root_to_color)
         board.log(f"Found {island_count} islands")
-        snap(26, f"Phase 1 done: {island_count} islands identified")
+        snap(53, f"Phase 1 done: {island_count} islands identified")
 
         # Compute initial best (largest existing island)
         best = 0
@@ -213,7 +213,7 @@ class MakingLargeIsland(Problem):
 
         # Phase 2: Try flipping each 0 cell
         board.log("Phase 2: Try flipping each 0-cell")
-        snap(30, "Phase 2: evaluate each 0-cell")
+        snap(34, "Phase 2: evaluate each 0-cell")
 
         best_r, best_c, best_total = -1, -1, best
 
@@ -236,7 +236,7 @@ class MakingLargeIsland(Problem):
 
                     board.set_overlay(r, c, str(candidate_total), "#f9e2af")
                     board.log(f"  ({r},{c}): flip 0->1, potential size = {candidate_total}")
-                    snap(40, f"({r},{c}): potential = {candidate_total}")
+                    snap(45, f"({r},{c}): potential = {candidate_total}")
 
                     if candidate_total > best_total:
                         # Clear previous best overlay if it was a 0 cell
@@ -272,5 +272,5 @@ class MakingLargeIsland(Problem):
                                     board.mark_on_path(pr, pc)
 
         board.log(f"Best: flip ({best_r},{best_c}), island size = {best_total}")
-        snap(44, f"Answer: {best_total} (flip ({best_r},{best_c}))")
+        snap(49, f"Answer: {best_total} (flip ({best_r},{best_c}))")
         return steps

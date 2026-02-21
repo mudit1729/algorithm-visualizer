@@ -154,7 +154,7 @@ class EqualityEquations(Problem):
 
         # Phase 1: Process equality constraints
         dsu.log("Phase 1: Process == equations")
-        snap(22, "Phase 1: equality constraints")
+        snap(26, "Phase 1: equality constraints")
 
         for eq in equations:
             if eq[1] == "=":
@@ -165,7 +165,7 @@ class EqualityEquations(Problem):
                 dsu.select(x)
                 dsu.select(y)
                 dsu.log(f"Process: {x_var}=={y_var}")
-                snap(24, f"{x_var}=={y_var}")
+                snap(28, f"{x_var}=={y_var}")
 
                 rx, ry = find(x), find(y)
                 if rx != ry:
@@ -178,10 +178,10 @@ class EqualityEquations(Problem):
                         if find(i) == root:
                             dsu.patch(i)
                     dsu.log(f"  Union {x_var} and {y_var}")
-                    snap(25, f"Union {x_var} and {y_var}")
+                    snap(29, f"Union {x_var} and {y_var}")
                 else:
                     dsu.log(f"  Already equal")
-                    snap(10, f"Already in same set")
+                    snap(12, f"Already in same set")
 
                 dsu.deselect_all()
 
@@ -189,7 +189,7 @@ class EqualityEquations(Problem):
         dsu.deselect_all()
         dsu.depatch_all()
         dsu.log("Phase 2: Check != equations")
-        snap(28, "Phase 2: inequality constraints")
+        snap(33, "Phase 2: inequality constraints")
 
         result = True
         for eq in equations:
@@ -221,7 +221,7 @@ class EqualityEquations(Problem):
                     dsu.log(f"  OK: {x_var} and {y_var} in different sets")
                     dsu.patch(x)
                     dsu.patch(y)
-                    snap(32, f"OK: {x_var} != {y_var}")
+                    snap(33, f"OK: {x_var} != {y_var}")
 
                 dsu.deselect_all()
 
@@ -232,5 +232,5 @@ class EqualityEquations(Problem):
             for i in range(n):
                 dsu.patch(i)
         dsu.log(f"Result: {'Satisfiable' if result else 'Not satisfiable'}")
-        snap(35, f"Result: {'true' if result else 'false'}")
+        snap(33, f"Result: {'true' if result else 'false'}")
         return steps

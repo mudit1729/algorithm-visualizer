@@ -116,7 +116,7 @@ class ShortestPathBinaryMatrix(Problem):
         grid[0][0] = 1
         tracer.patch(0, 0)
         tracer.log("Start BFS from (0,0), path length = 1")
-        snap(6, "Start at (0,0)")
+        snap(7, "Start at (0,0)")
 
         dirs = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
 
@@ -126,11 +126,11 @@ class ShortestPathBinaryMatrix(Problem):
 
             tracer.deselect_all()
             tracer.select(r, c)
-            snap(11, f"Process ({r},{c}), dist={d}")
+            snap(13, f"Process ({r},{c}), dist={d}")
 
             if r == n - 1 and c == n - 1:
                 tracer.log(f"Reached target! Path length = {d}")
-                snap(13, f"Target reached! Path = {d}")
+                snap(15, f"Target reached! Path = {d}")
                 result = d
                 break
 
@@ -143,7 +143,7 @@ class ShortestPathBinaryMatrix(Problem):
                     tracer.set_value(nr, nc, str(1))
                     tracer.patch(nr, nc)
                     tracer.log(f"  Enqueue ({nr},{nc}), dist={d + 1}")
-                    snap(18, f"Enqueue ({nr},{nc}), dist={d+1}")
+                    snap(20, f"Enqueue ({nr},{nc}), dist={d+1}")
 
         tracer.deselect_all()
         if result == -1:

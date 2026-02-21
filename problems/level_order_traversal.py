@@ -152,7 +152,7 @@ class LevelOrderTraversal(Problem):
 
             tracer.deselect_all_nodes()
             tracer.log(f"--- Level {level_num} ({level_size} nodes) ---")
-            snap(7, f"Level {level_num}: processing {level_size} nodes")
+            snap(8, f"Level {level_num}: processing {level_size} nodes")
 
             for i in range(level_size):
                 node_id = queue.popleft()
@@ -164,7 +164,7 @@ class LevelOrderTraversal(Problem):
                 tracer.deselect_all_nodes()
                 tracer.select_node(node_id)
                 tracer.log(f"Dequeue node {node_label}")
-                snap(9, f"Dequeue node {node_label} (id={node_id})")
+                snap(10, f"Dequeue node {node_label} (id={node_id})")
 
                 # Enqueue left child
                 if left_child is not None:
@@ -172,7 +172,7 @@ class LevelOrderTraversal(Problem):
                     aux.push("Queue", tree[left_child][0], f"node {left_child}")
                     tracer.select_edge(node_id, left_child)
                     tracer.log(f"  Enqueue left child: {tree[left_child][0]}")
-                    snap(12, f"Enqueue left child {tree[left_child][0]}")
+                    snap(13, f"Enqueue left child {tree[left_child][0]}")
                     tracer.deselect_edge(node_id, left_child)
 
                 # Enqueue right child
@@ -181,7 +181,7 @@ class LevelOrderTraversal(Problem):
                     aux.push("Queue", tree[right_child][0], f"node {right_child}")
                     tracer.select_edge(node_id, right_child)
                     tracer.log(f"  Enqueue right child: {tree[right_child][0]}")
-                    snap(14, f"Enqueue right child {tree[right_child][0]}")
+                    snap(15, f"Enqueue right child {tree[right_child][0]}")
                     tracer.deselect_edge(node_id, right_child)
 
                 # Patch node as processed
@@ -192,7 +192,7 @@ class LevelOrderTraversal(Problem):
             level_str = "[" + ", ".join(level) + "]"
             aux.push("Result", f"L{level_num}", level_str)
             tracer.log(f"Level {level_num} complete: {level_str}")
-            snap(16, f"Level {level_num} = {level_str}")
+            snap(18, f"Level {level_num} = {level_str}")
             level_num += 1
 
         # Final result

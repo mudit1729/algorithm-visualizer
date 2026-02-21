@@ -118,7 +118,7 @@ class AlienDictionary(Problem):
         in_degree: dict[str, int] = {c: 0 for c in chars}
 
         graph.log("--- Phase 1: Build DAG from adjacent word pairs ---")
-        snap(5, "Build DAG by comparing adjacent words")
+        snap(6, "Build DAG by comparing adjacent words")
 
         for i in range(len(words) - 1):
             w1, w2 = words[i], words[i + 1]
@@ -139,21 +139,21 @@ class AlienDictionary(Problem):
                             f"Compare \"{w1}\" vs \"{w2}\": "
                             f"'{u}' != '{v}' => edge {u}->{v}"
                         )
-                        snap(12, f"\"{w1}\" vs \"{w2}\": {u} < {v}")
+                        snap(13, f"\"{w1}\" vs \"{w2}\": {u} < {v}")
                         graph.deselect_edge(u, v)
                     else:
                         graph.log(
                             f"Compare \"{w1}\" vs \"{w2}\": "
                             f"'{u}' != '{v}' => edge {u}->{v} (already exists)"
                         )
-                        snap(12, f"\"{w1}\" vs \"{w2}\": {u}<{v} (dup)")
+                        snap(13, f"\"{w1}\" vs \"{w2}\": {u}<{v} (dup)")
                     graph.deselect_node(u)
                     graph.deselect_node(v)
                     found = True
                     break
             if not found:
                 graph.log(f"Compare \"{w1}\" vs \"{w2}\": prefix match, no new edge")
-                snap(7, f"\"{w1}\" vs \"{w2}\": prefix, no edge")
+                snap(8, f"\"{w1}\" vs \"{w2}\": prefix, no edge")
 
         # Apply layered layout after all edges are added
         graph.set_layered_layout()
@@ -161,11 +161,11 @@ class AlienDictionary(Problem):
         # Update in-degree display
         aux.set_items("In-Degree", [(c, str(in_degree[c])) for c in chars])
         graph.log("DAG built. Applying layered layout.")
-        snap(15, "DAG complete, layered layout applied")
+        snap(30, "DAG complete, layered layout applied")
 
         # Phase 2: Topological sort (Kahn's algorithm)
         graph.log("--- Phase 2: Topological sort (Kahn's BFS) ---")
-        snap(17, "Begin topological sort")
+        snap(20, "Begin topological sort")
 
         queue: deque[str] = deque()
         for c in chars:
@@ -177,7 +177,7 @@ class AlienDictionary(Problem):
         queue_str = ", ".join(queue)
         graph.log(f"Initial queue (in-degree 0): [{queue_str}]")
         aux.set_items("In-Degree", [(c, str(in_degree[c])) for c in chars])
-        snap(18, f"Start queue: [{queue_str}]")
+        snap(21, f"Start queue: [{queue_str}]")
 
         order: list[str] = []
         layer_num = 0
@@ -209,7 +209,7 @@ class AlienDictionary(Problem):
             aux.push("Order", c, f"pos {len(order)}")
             graph.log(f"Dequeue '{c}', add to order (pos {len(order)})")
             aux.set_items("In-Degree", [(ch, str(in_degree[ch])) for ch in chars])
-            snap(21, f"Take '{c}' (order pos {len(order)})")
+            snap(24, f"Take '{c}' (order pos {len(order)})")
 
             for nei in sorted(adj[c]):
                 in_degree[nei] -= 1
@@ -218,13 +218,13 @@ class AlienDictionary(Problem):
                 graph.set_label(nei, f"{nei}({in_degree[nei]})")
                 aux.set_items("In-Degree", [(ch, str(in_degree[ch])) for ch in chars])
                 graph.log(f"  in_degree['{nei}'] = {in_degree[nei]}")
-                snap(24, f"in_degree['{nei}'] = {in_degree[nei]}")
+                snap(28, f"in_degree['{nei}'] = {in_degree[nei]}")
 
                 if in_degree[nei] == 0:
                     queue.append(nei)
                     graph.set_node_color(nei, "#89b4fa")
                     graph.log(f"  '{nei}' ready (in-degree 0), enqueue")
-                    snap(26, f"'{nei}' now available")
+                    snap(30, f"'{nei}' now available")
 
                 graph.deselect_edge(c, nei)
                 graph.deselect_node(nei)
@@ -238,6 +238,6 @@ class AlienDictionary(Problem):
             snap(29, f"Alien order: {result}")
         else:
             graph.log("Cycle detected! No valid ordering.")
-            snap(31, "No valid ordering (cycle)")
+            snap(30, "No valid ordering (cycle)")
 
         return steps

@@ -130,11 +130,11 @@ class RottingOranges(Problem):
                     fresh += 1
 
         tracer.log(f"Rotten sources: {len(queue)}, Fresh: {fresh}")
-        snap(7, f"Found {len(queue)} rotten, {fresh} fresh oranges")
+        snap(8, f"Found {len(queue)} rotten, {fresh} fresh oranges")
 
         if fresh == 0:
             tracer.log("No fresh oranges — done!")
-            snap(13, "Result: 0 minutes")
+            snap(29, "Result: 0 minutes")
             return steps
 
         minutes = 0
@@ -142,7 +142,7 @@ class RottingOranges(Problem):
             level_size = len(queue)
             tracer.deselect_all()
             tracer.log(f"--- Minute {minutes} (processing {level_size} rotten) ---")
-            snap(17, f"Minute {minutes}: {level_size} rotten spreading")
+            snap(20, f"Minute {minutes}: {level_size} rotten spreading")
 
             rotted_this_round = False
             for _ in range(level_size):
@@ -159,7 +159,7 @@ class RottingOranges(Problem):
                         tracer.set_value(nr, nc, str(2))
                         tracer.mark_error(nr, nc)
                         tracer.log(f"  Orange at ({nr},{nc}) rots!")
-                        snap(24, f"({nr},{nc}) rots! Fresh left: {fresh}")
+                        snap(27, f"({nr},{nc}) rots! Fresh left: {fresh}")
                         tracer.deselect(nr, nc)
 
             minutes += 1
@@ -169,5 +169,5 @@ class RottingOranges(Problem):
         tracer.deselect_all()
         result = minutes - 1 if fresh == 0 else -1
         tracer.log(f"Result: {result} minutes")
-        snap(28, f"Result: {result} minutes")
+        snap(29, f"Result: {result} minutes")
         return steps

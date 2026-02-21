@@ -160,14 +160,14 @@ class AccountsMerge(Problem):
             dsu.deselect_all()
             dsu.select(i)
             dsu.log(f"Process account {i} ({name}): {emails}")
-            snap(24, f"Process account {i} ({name})")
+            snap(28, f"Process account {i} ({name})")
 
             for email in emails:
                 if email in email_to_id:
                     j = email_to_id[email]
                     dsu.select(j)
                     dsu.log(f"  Email '{email}' shared with account {j}")
-                    snap(26, f"'{email}' links {i} and {j}")
+                    snap(30, f"'{email}' links {i} and {j}")
 
                     ri, rj = find(i), find(j)
                     if ri != rj:
@@ -179,10 +179,10 @@ class AccountsMerge(Problem):
                             if find(k) == find(i):
                                 dsu.patch(k)
                         dsu.log(f"  Union accounts {i} and {j}")
-                        snap(27, f"Union {i} and {j}")
+                        snap(31, f"Union {i} and {j}")
                     else:
                         dsu.log(f"  Already in same group")
-                        snap(11, f"Already merged")
+                        snap(13, f"Already merged")
 
                     dsu.deselect(j)
                 else:

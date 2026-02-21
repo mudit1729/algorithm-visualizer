@@ -119,7 +119,7 @@ class FloydWarshall(Problem):
             tracer.select_node(k)
             tracer.set_node_color(k, "#f9e2af")  # yellow highlight
             tracer.log(f"Intermediate k={k}")
-            snap(9, f"Intermediate node k={k}")
+            snap(10, f"Intermediate node k={k}")
 
             for i in range(n):
                 for j in range(n):
@@ -154,7 +154,7 @@ class FloydWarshall(Problem):
                             f"via k={k}"
                         )
                         snap(
-                            13,
+                            15,
                             f"dist[{i}][{j}] = {fmt(new_dist)} via k={k}",
                         )
 
@@ -173,7 +173,7 @@ class FloydWarshall(Problem):
             tracer.deselect_node(k)
             tracer.patch_node(k)
             tracer.log(f"Done with intermediate k={k}")
-            snap(9, f"Completed intermediate k={k}")
+            snap(15, f"Completed intermediate k={k}")
 
         # Final state: show all distances on labels
         tracer.deselect_all_nodes()

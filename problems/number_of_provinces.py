@@ -156,14 +156,14 @@ class NumberOfProvinces(Problem):
                     tracer.select_node(j)
                     tracer.select_edge(i, j)
                     tracer.log(f"Edge ({i},{j}): connected")
-                    snap(22, f"Check edge ({i},{j})")
+                    snap(25, f"Check edge ({i},{j})")
 
                     ri, rj = find(i), find(j)
                     if ri == rj:
                         tracer.log(f"  Already same province")
                         tracer.deselect_edge(i, j)
                         tracer.patch_edge(i, j)
-                        snap(23, f"Already connected")
+                        snap(26, f"Already connected")
                     else:
                         union(i, j)
                         components -= 1
@@ -174,11 +174,11 @@ class NumberOfProvinces(Problem):
                             c = province_colors[root % len(province_colors)]
                             tracer.set_node_color(k, c)
                         tracer.log(f"  Union! Provinces = {components}")
-                        snap(24, f"Union! Provinces = {components}")
+                        snap(28, f"Union! Provinces = {components}")
 
                     tracer.deselect_all_edges()
 
         tracer.deselect_all_nodes()
         tracer.log(f"Result: {components} provinces")
-        snap(26, f"Result: {components} provinces")
+        snap(28, f"Result: {components} provinces")
         return steps

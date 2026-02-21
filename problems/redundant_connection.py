@@ -136,7 +136,7 @@ class RedundantConnection(Problem):
             tracer.select_node(v)
             tracer.select_edge(u, v)
             tracer.log(f"Process edge [{u}, {v}]")
-            snap(21, f"Add edge [{u}, {v}]")
+            snap(24, f"Add edge [{u}, {v}]")
 
             if not union(u, v):
                 tracer.mark_node_error(u)

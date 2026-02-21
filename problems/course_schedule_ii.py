@@ -113,7 +113,7 @@ class CourseScheduleII(Problem):
         edges_str = ", ".join(f"{b}->{a}" for a, b in prerequisites)
         tracer.log(f"Courses: {num_courses}, Edges: {edges_str}")
         tracer.log(f"Labels show node(in-degree)")
-        snap(4, f"{num_courses} courses, showing in-degrees")
+        snap(5, f"{num_courses} courses, showing in-degrees")
 
         queue: deque[int] = deque()
         for i in range(num_courses):
@@ -122,7 +122,7 @@ class CourseScheduleII(Problem):
                 tracer.select_node(i)
 
         tracer.log(f"Initial queue (in-degree 0): {list(queue)}")
-        snap(9, f"Courses with no prereqs: {list(queue)}")
+        snap(11, f"Courses with no prereqs: {list(queue)}")
 
         order: list[int] = []
         order_pos = 1
@@ -134,7 +134,7 @@ class CourseScheduleII(Problem):
             tracer.patch_node(u)
             tracer.set_label(u, f"{u}[#{order_pos}]")
             tracer.log(f"Take course {u} (order: {order})")
-            snap(13, f"Take course {u}")
+            snap(16, f"Take course {u}")
             order_pos += 1
 
             for v in adj[u]:
@@ -143,7 +143,7 @@ class CourseScheduleII(Problem):
                 tracer.select_edge(u, v)
                 tracer.select_node(v)
                 tracer.log(f"  in_degree[{v}] = {in_degree[v]}")
-                snap(16, f"in_degree[{v}] = {in_degree[v]}")
+                snap(19, f"in_degree[{v}] = {in_degree[v]}")
 
                 if in_degree[v] == 0:
                     queue.append(v)
@@ -155,8 +155,8 @@ class CourseScheduleII(Problem):
 
         if len(order) == num_courses:
             tracer.log(f"Valid order: {order}")
-            snap(20, f"Order: {order}")
+            snap(21, f"Order: {order}")
         else:
             tracer.log("Cycle detected! No valid ordering.")
-            snap(20, "Cycle: no valid order")
+            snap(21, "Cycle: no valid order")
         return steps

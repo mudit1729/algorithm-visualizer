@@ -163,7 +163,7 @@ class SwimInRisingWater(Problem):
             board.deselect_all()
             board.select(r, c)
             board.log(f"t={t}: cell ({r},{c}) now underwater")
-            snap(22, f"t={t}: cell ({r},{c}) elevation={t}")
+            snap(26, f"t={t}: cell ({r},{c}) elevation={t}")
 
             # Mark cell as underwater (patched)
             underwater.add((r, c))
@@ -180,7 +180,7 @@ class SwimInRisingWater(Problem):
             if find(0) == find((n - 1) * n + (n - 1)):
                 answer = t
                 board.log(f"  Connected! (0,0) and ({n-1},{n-1}) in same component")
-                snap(29, f"t={t}: path found!")
+                snap(33, f"t={t}: path found!")
 
                 # Trace the path by marking connected cells
                 start_root = find(0)
@@ -190,7 +190,7 @@ class SwimInRisingWater(Problem):
                             board.mark_on_path(pr, pc)
 
                 board.log(f"Answer: t = {answer}")
-                snap(30, f"Minimum time = {answer}")
+                snap(34, f"Minimum time = {answer}")
                 break
             else:
                 board.deselect(r, c)

@@ -121,14 +121,14 @@ class FloodFill(Problem):
             tracer.deselect_all()
             tracer.select(r, c)
             tracer.log(f"Visit ({r},{c})")
-            snap(11, f"Visit ({r},{c})")
+            snap(12, f"Visit ({r},{c})")
 
             image[r][c] = new_color
             tracer.set_value(r, c, str(new_color))
             tracer.patch(r, c)
             tracer.deselect(r, c)
             tracer.log(f"  Fill ({r},{c}) -> {new_color}")
-            snap(12, f"Fill ({r},{c}) with color {new_color}")
+            snap(13, f"Fill ({r},{c}) with color {new_color}")
 
             dfs(r + 1, c)
             dfs(r - 1, c)
@@ -139,5 +139,5 @@ class FloodFill(Problem):
 
         tracer.deselect_all()
         tracer.log("Flood fill complete!")
-        snap(18, "Flood fill complete!")
+        snap(19, "Flood fill complete!")
         return steps

@@ -113,7 +113,7 @@ class CourseSchedule(Problem):
             tracer.select_node(u)
             tracer.set_node_color(u, "#f9e2af")
             tracer.log(f"DFS({u}): mark IN_PROGRESS")
-            snap(8, f"DFS({u}): in-progress")
+            snap(10, f"DFS({u}): in-progress")
 
             for v in adj[u]:
                 tracer.select_edge(u, v)
@@ -122,12 +122,12 @@ class CourseSchedule(Problem):
                     tracer.mark_node_error(u)
                     tracer.mark_edge_error(u, v)
                     tracer.log(f"  Edge {u}->{v}: CYCLE! (back edge)")
-                    snap(11, f"Cycle: {u}->{v}")
+                    snap(13, f"Cycle: {u}->{v}")
                     has_cycle = True
                     return False
                 if state[v] == 0:
                     tracer.log(f"  Visit {u}->{v}")
-                    snap(13, f"DFS {u}->{v}")
+                    snap(15, f"DFS {u}->{v}")
                     tracer.deselect_edge(u, v)
                     if not dfs(v):
                         return False
@@ -139,7 +139,7 @@ class CourseSchedule(Problem):
             tracer.set_node_color(u, "")
             tracer.patch_node(u)
             tracer.log(f"DFS({u}): COMPLETED")
-            snap(15, f"DFS({u}): completed")
+            snap(18, f"DFS({u}): completed")
             return True
 
         for i in range(num_courses):

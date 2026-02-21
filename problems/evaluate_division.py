@@ -140,14 +140,14 @@ class EvaluateDivision(Problem):
             tracer.depatch_all_edges()
 
             tracer.log(f"--- Query {qi + 1}: {src} / {dst} ---")
-            snap(7, f"Query {qi + 1}: {src} / {dst}")
+            snap(8, f"Query {qi + 1}: {src} / {dst}")
 
             # Check if variables exist
             if src not in graph or dst not in graph:
                 tracer.log(f"  Variable not in graph -> -1.0")
                 answers.append(-1.0)
                 aux.push("Answers", f"Q{qi + 1}: {src}/{dst}", "-1.0")
-                snap(9, f"{src}/{dst} = -1.0 (unknown variable)")
+                snap(10, f"{src}/{dst} = -1.0 (unknown variable)")
                 continue
 
             if src == dst:
@@ -156,7 +156,7 @@ class EvaluateDivision(Problem):
                 tracer.log(f"  Same variable -> 1.0")
                 answers.append(1.0)
                 aux.push("Answers", f"Q{qi + 1}: {src}/{dst}", "1.0")
-                snap(11, f"{src}/{dst} = 1.0 (same variable)")
+                snap(12, f"{src}/{dst} = 1.0 (same variable)")
                 continue
 
             # BFS to find path
@@ -166,7 +166,7 @@ class EvaluateDivision(Problem):
             )
             tracer.select_node(src)
             tracer.log(f"  BFS from {src}")
-            snap(13, f"Start BFS from '{src}'")
+            snap(14, f"Start BFS from '{src}'")
 
             found = False
             while bfs_queue:
@@ -195,7 +195,7 @@ class EvaluateDivision(Problem):
                             f"Q{qi + 1}: {src}/{dst}",
                             f"{result:.4f}",
                         )
-                        snap(18, f"{src}/{dst} = {result:.4f} via {path_str}")
+                        snap(24, f"{src}/{dst} = {result:.4f} via {path_str}")
                         found = True
                         break
 
@@ -207,7 +207,7 @@ class EvaluateDivision(Problem):
                         tracer.select_node(nei)
                         tracer.select_edge(node, nei)
                         tracer.log(f"  Visit {nei}, product = {prod * w:.4f}")
-                        snap(21, f"Visit '{nei}', running product = {prod * w:.4f}")
+                        snap(22, f"Visit '{nei}', running product = {prod * w:.4f}")
                         tracer.deselect_edge(node, nei)
 
                 if found:
@@ -217,7 +217,7 @@ class EvaluateDivision(Problem):
                 tracer.log(f"  No path found -> -1.0")
                 answers.append(-1.0)
                 aux.push("Answers", f"Q{qi + 1}: {src}/{dst}", "-1.0")
-                snap(23, f"{src}/{dst} = -1.0 (no path)")
+                snap(24, f"{src}/{dst} = -1.0 (no path)")
 
         # Final result
         tracer.deselect_all_nodes()
@@ -226,5 +226,5 @@ class EvaluateDivision(Problem):
         tracer.depatch_all_edges()
         ans_str = ", ".join(f"{a:.4f}" for a in answers)
         tracer.log(f"All answers: [{ans_str}]")
-        snap(25, f"Done! Answers: [{ans_str}]")
+        snap(24, f"Done! Answers: [{ans_str}]")
         return steps

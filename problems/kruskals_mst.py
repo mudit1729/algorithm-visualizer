@@ -157,7 +157,7 @@ class KruskalsMST(Problem):
             graph.select_node(v)
             graph.select_edge(*edge_key)
             graph.log(f"Consider edge {u}-{v} (w={w})")
-            snap(23, f"Consider edge {u}-{v}, w={w}")
+            snap(26, f"Consider edge {u}-{v}, w={w}")
 
             if union(u, v):
                 mst.append((u, v, w))
@@ -167,13 +167,13 @@ class KruskalsMST(Problem):
                 graph.patch_node(v)
                 update_aux()
                 graph.log(f"  Accept! MST cost = {mst_cost}")
-                snap(25, f"Accept {u}-{v}, cost = {mst_cost}")
+                snap(28, f"Accept {u}-{v}, cost = {mst_cost}")
             else:
                 graph.mark_edge_error(*edge_key)
                 graph.mark_node_error(u)
                 graph.mark_node_error(v)
                 graph.log(f"  Reject! Cycle detected (same root)")
-                snap(15, f"Reject {u}-{v}: cycle")
+                snap(17, f"Reject {u}-{v}: cycle")
 
                 # Clear errors after showing
                 graph.clear_all_edge_errors()
@@ -184,7 +184,7 @@ class KruskalsMST(Problem):
 
             if len(mst) == n - 1:
                 graph.log(f"MST complete with {n - 1} edges")
-                snap(28, f"MST complete, {n - 1} edges found")
+                snap(31, f"MST complete, {n - 1} edges found")
                 break
 
         # Final result
@@ -192,5 +192,5 @@ class KruskalsMST(Problem):
         graph.deselect_all_edges()
         mst_str = ", ".join(f"{u}-{v}(w={w})" for u, v, w in mst)
         graph.log(f"MST cost = {mst_cost}, edges: {mst_str}")
-        snap(30, f"Kruskal's MST complete, total cost = {mst_cost}")
+        snap(31, f"Kruskal's MST complete, total cost = {mst_cost}")
         return steps

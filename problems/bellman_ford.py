@@ -109,7 +109,7 @@ class BellmanFord(Problem):
         # V-1 iterations
         for i in range(n - 1):
             tracer.log(f"--- Pass {i + 1} of {n - 1} ---")
-            snap(5, f"Pass {i + 1} of {n - 1}")
+            snap(6, f"Pass {i + 1} of {n - 1}")
             updated = False
 
             for u, v, w in edge_list:
@@ -124,12 +124,12 @@ class BellmanFord(Problem):
                     tracer.set_edge_class(u, v, "relaxed")
                     old_str = "INF" if old_dist == float("inf") else str(int(old_dist))
                     tracer.log(f"  Relax {u}->{v}: dist[{v}] = {old_str} -> {int(dist[v])}")
-                    snap(7, f"Relax {u}->{v}: {old_str} -> {int(dist[v])}")
+                    snap(8, f"Relax {u}->{v}: {old_str} -> {int(dist[v])}")
                     updated = True
                 else:
                     u_str = "INF" if dist[u] == float("inf") else str(int(dist[u]))
                     tracer.log(f"  Edge {u}->{v} (w={w}): no improvement")
-                    snap(6, f"Check {u}->{v}: no relax")
+                    snap(7, f"Check {u}->{v}: no relax")
 
                 tracer.deselect_edge(u, v)
                 tracer.deselect_node(u)
@@ -137,12 +137,12 @@ class BellmanFord(Problem):
 
             if not updated:
                 tracer.log(f"  No updates in pass {i + 1}, early stop")
-                snap(5, f"Pass {i + 1}: no updates, done early")
+                snap(14, f"Pass {i + 1}: no updates, done early")
                 break
 
         # Check for negative cycles
         tracer.log("--- Negative cycle check ---")
-        snap(10, "Negative cycle check")
+        snap(12, "Negative cycle check")
         has_negative_cycle = False
         for u, v, w in edge_list:
             tracer.select_edge(u, v)
@@ -151,7 +151,7 @@ class BellmanFord(Problem):
                 tracer.mark_node_error(v)
                 tracer.mark_edge_error(u, v)
                 tracer.log(f"  Negative cycle detected via {u}->{v}")
-                snap(11, f"Negative cycle: {u}->{v}")
+                snap(14, f"Negative cycle: {u}->{v}")
                 has_negative_cycle = True
                 break
             tracer.deselect_edge(u, v)

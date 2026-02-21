@@ -118,7 +118,7 @@ class NumberOfIslands(Problem):
 
             tracer.deselect_all()
             tracer.select(r, c)
-            snap(7, f"Check ({r},{c}): {'land' if grid[r][c] == '1' else 'water/visited'}")
+            snap(8, f"Check ({r},{c}): {'land' if grid[r][c] == '1' else 'water/visited'}")
 
             if grid[r][c] != "1":
                 tracer.deselect(r, c)
@@ -130,7 +130,7 @@ class NumberOfIslands(Problem):
             tracer.deselect(r, c)
             tracer.patch(r, c)
             tracer.log(f"Visit ({r},{c})")
-            snap(9, f"Mark ({r},{c}) as visited")
+            snap(10, f"Mark ({r},{c}) as visited")
 
             # Recurse in 4 directions
             dfs(r + 1, c)
@@ -143,12 +143,12 @@ class NumberOfIslands(Problem):
             for j in range(n):
                 tracer.deselect_all()
                 tracer.select(i, j)
-                snap(17, f"Scan ({i},{j})")
+                snap(19, f"Scan ({i},{j})")
 
                 if grid[i][j] == "1":
                     count += 1
                     tracer.log(f"Found island #{count} at ({i},{j})")
-                    snap(19, f"Found island #{count} starting at ({i},{j})")
+                    snap(21, f"Found island #{count} starting at ({i},{j})")
                     tracer.deselect(i, j)
                     dfs(i, j)
                 else:

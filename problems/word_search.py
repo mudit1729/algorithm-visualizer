@@ -140,7 +140,7 @@ class WordSearch(Problem):
                 tracer.select(r, c)
                 tracer.mark_error(r, c)
                 tracer.log(f"  ({r},{c})='{board[r][c]}' != '{word[idx]}' - mismatch")
-                snap(8, f"({r},{c})='{board[r][c]}' != '{word[idx]}' - mismatch")
+                snap(9, f"({r},{c})='{board[r][c]}' != '{word[idx]}' - mismatch")
                 tracer.clear_error(r, c)
                 tracer.deselect(r, c)
                 return False
@@ -152,13 +152,13 @@ class WordSearch(Problem):
             tracer.set_overlay(r, c, str(idx), color="#22c55e")
             found_path.append((r, c))
             tracer.log(f"Match '{word[idx]}' at ({r},{c}), idx={idx}")
-            snap(10, f"Match '{word[idx]}' at ({r},{c}), char {idx + 1}/{len(word)}")
+            snap(11, f"Match '{word[idx]}' at ({r},{c}), char {idx + 1}/{len(word)}")
 
             # Mark cell as used
             tmp = board[r][c]
             board[r][c] = '#'
             tracer.set_value(r, c, '#')
-            snap(11, f"Mark ({r},{c}) as visited")
+            snap(12, f"Mark ({r},{c}) as visited")
 
             # Try all 4 directions
             for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
@@ -167,7 +167,7 @@ class WordSearch(Problem):
 
                 if 0 <= nr < m and 0 <= nc < n and board[nr][nc] != '#':
                     tracer.set_arrow(r, c, dir_name)
-                    snap(12, f"Try {dir_name} from ({r},{c})")
+                    snap(13, f"Try {dir_name} from ({r},{c})")
 
                 if dfs(nr, nc, idx + 1):
                     search_done = True
@@ -182,7 +182,7 @@ class WordSearch(Problem):
             found_path.pop()
             tracer.mark_error(r, c)
             tracer.log(f"Backtrack from ({r},{c})")
-            snap(14, f"Backtrack from ({r},{c})")
+            snap(15, f"Backtrack from ({r},{c})")
             tracer.clear_error(r, c)
             return False
 
@@ -197,7 +197,7 @@ class WordSearch(Problem):
                     tracer.clear_all_paths()
                     tracer.clear_all_overlays()
                     tracer.log(f"Try starting at ({i},{j})")
-                    snap(18, f"Try starting search at ({i},{j})")
+                    snap(20, f"Try starting search at ({i},{j})")
                     if dfs(i, j, 0):
                         result = True
                         break
@@ -216,9 +216,9 @@ class WordSearch(Problem):
                     dr, dc = nr - r, nc - c
                     tracer.set_arrow(r, c, _DIR_NAMES.get((dr, dc), ""))
             tracer.log(f"Word \"{word}\" found!")
-            snap(20, f"Word \"{word}\" found!")
+            snap(22, f"Word \"{word}\" found!")
         else:
             tracer.log(f"Word \"{word}\" not found")
-            snap(21, f"Word \"{word}\" not found in grid")
+            snap(23, f"Word \"{word}\" not found in grid")
 
         return steps

@@ -123,7 +123,7 @@ class IsBipartite(Problem):
             tracer.set_node_color(u, node_color)
             tracer.select_node(u)
             tracer.log(f"Color node {u} = {'A (blue)' if c == 0 else 'B (orange)'}")
-            snap(5, f"Color node {u} = {'A' if c == 0 else 'B'}")
+            snap(6, f"Color node {u} = {'A' if c == 0 else 'B'}")
             tracer.deselect_node(u)
 
             for v in graph[u]:
@@ -133,12 +133,12 @@ class IsBipartite(Problem):
                     key = (min(u, v), max(u, v))
                     tracer.mark_edge_error(min(u, v), max(u, v))
                     tracer.log(f"  Conflict! Nodes {u} and {v} same color")
-                    snap(7, f"Conflict: {u} & {v} same color!")
+                    snap(8, f"Conflict: {u} & {v} same color!")
                     is_bipartite = False
                     return False
                 if color[v] == -1:
                     tracer.log(f"  Edge {u}-{v}: color {v}")
-                    snap(9, f"Visit {u}->{v}")
+                    snap(10, f"Visit {u}->{v}")
                     if not dfs(v, 1 - c):
                         return False
             return True
@@ -146,12 +146,12 @@ class IsBipartite(Problem):
         for i in range(n):
             if color[i] == -1:
                 tracer.log(f"Start DFS from node {i}")
-                snap(14, f"Start component from {i}")
+                snap(16, f"Start component from {i}")
                 if not dfs(i, 0):
                     break
 
         tracer.deselect_all_nodes()
         tracer.clear_all_node_errors()
         tracer.log(f"Result: {'Bipartite' if is_bipartite else 'Not bipartite'}")
-        snap(17, f"Result: {'Bipartite' if is_bipartite else 'Not bipartite'}")
+        snap(19, f"Result: {'Bipartite' if is_bipartite else 'Not bipartite'}")
         return steps

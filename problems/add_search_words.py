@@ -116,23 +116,23 @@ class AddSearchWords(Problem):
         trie_is_end[root_id] = False
 
         tracer.log("Initialize empty WordDictionary")
-        snap(8, "Create empty WordDictionary")
+        snap(10, "Create empty WordDictionary")
 
         # =============================================
         # PHASE 1: ADD WORDS
         # =============================================
         tracer.log("--- Phase 1: Add words ---")
-        snap(8, "Phase 1: Add words to dictionary")
+        snap(10, "Phase 1: Add words to dictionary")
 
         for word in words_to_add:
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.log(f"addWord(\"{word}\")")
-            snap(10, f"addWord(\"{word}\")")
+            snap(12, f"addWord(\"{word}\")")
 
             current = root_id
             tracer.select_node(current)
-            snap(11, f"Start at root")
+            snap(13, f"Start at root")
 
             for i, ch in enumerate(word):
                 if ch in trie_children[current]:
@@ -141,7 +141,7 @@ class AddSearchWords(Problem):
                     tracer.select_edge(current, child_id)
                     tracer.select_node(child_id)
                     tracer.log(f"  '{ch}' exists, follow edge")
-                    snap(14, f"'{ch}' exists, follow to node {child_id}")
+                    snap(16, f"'{ch}' exists, follow to node {child_id}")
                     tracer.deselect_node(current)
                     tracer.deselect_edge(current, child_id)
                     current = child_id
@@ -155,7 +155,7 @@ class AddSearchWords(Problem):
                     tracer.select_edge(current, new_id)
                     tracer.select_node(new_id)
                     tracer.log(f"  Create node for '{ch}'")
-                    snap(15, f"Create new node for '{ch}'")
+                    snap(18, f"Create new node for '{ch}'")
                     tracer.deselect_node(current)
                     tracer.deselect_edge(current, new_id)
                     current = new_id
@@ -164,7 +164,7 @@ class AddSearchWords(Problem):
             tracer.set_end(current, True)
             trie_is_end[current] = True
             tracer.log(f"  Mark end of \"{word}\"")
-            snap(17, f"Mark end of \"{word}\"")
+            snap(20, f"Mark end of \"{word}\"")
 
             # Patch the path
             path_nodes, path_edges = _trace_path(root_id, word, trie_children)
@@ -175,7 +175,7 @@ class AddSearchWords(Problem):
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.log(f"  \"{word}\" added")
-            snap(17, f"\"{word}\" added to dictionary")
+            snap(20, f"\"{word}\" added to dictionary")
 
             # Clear patches
             for nid in path_nodes:
@@ -190,7 +190,7 @@ class AddSearchWords(Problem):
         tracer.deselect_all_edges()
         tracer.clear_all_node_errors()
         tracer.log("--- Phase 2: Search patterns ---")
-        snap(19, "Phase 2: Search with wildcards")
+        snap(22, "Phase 2: Search with wildcards")
 
         for pattern in patterns_to_search:
             tracer.deselect_all_nodes()
@@ -198,7 +198,7 @@ class AddSearchWords(Problem):
             tracer.clear_all_node_errors()
             tracer.clear_all_edge_errors()
             tracer.log(f"search(\"{pattern}\")")
-            snap(20, f"search(\"{pattern}\")")
+            snap(23, f"search(\"{pattern}\")")
 
             result = _dfs_search(
                 tracer, root_id, pattern, 0,
@@ -264,11 +264,11 @@ def _dfs_search(
         is_end = trie_is_end.get(node_id, False)
         if is_end:
             tracer.log(f"    End of pattern at node {node_id}, is_end=True")
-            snap(23, f"Pattern matched! is_end=True")
+            snap(26, f"Pattern matched! is_end=True")
         else:
             tracer.log(f"    End of pattern at node {node_id}, is_end=False")
             tracer.mark_node_error(node_id)
-            snap(23, f"End of pattern but not a word end")
+            snap(26, f"End of pattern but not a word end")
         return is_end
 
     ch = pattern[idx]
@@ -279,7 +279,7 @@ def _dfs_search(
         if not children:
             tracer.mark_node_error(node_id)
             tracer.log(f"    '.' at pos {idx}: no children to explore")
-            snap(26, f"'.' wildcard: no children")
+            snap(29, f"'.' wildcard: no children")
             return False
 
         # Highlight all children to show wildcard branching
@@ -287,7 +287,7 @@ def _dfs_search(
             tracer.select_node(child_id)
             tracer.select_edge(node_id, child_id)
         tracer.log(f"    '.' at pos {idx}: try all {len(children)} children")
-        snap(26, f"'.' wildcard: explore {len(children)} branches")
+        snap(29, f"'.' wildcard: explore {len(children)} branches")
 
         # Deselect all, then try each one
         tracer.deselect_all_nodes()
@@ -298,7 +298,7 @@ def _dfs_search(
             tracer.select_edge(node_id, child_id)
             tracer.select_node(child_id)
             tracer.log(f"    '.' matches '{child_ch}' -> node {child_id}")
-            snap(27, f"'.' matches '{child_ch}'")
+            snap(30, f"'.' matches '{child_ch}'")
 
             tracer.deselect_node(node_id)
 
@@ -312,7 +312,7 @@ def _dfs_search(
             tracer.deselect_edge(node_id, child_id)
 
         tracer.log(f"    '.' at pos {idx}: no branch matched")
-        snap(28, f"'.' wildcard: all branches exhausted")
+        snap(31, f"'.' wildcard: all branches exhausted")
         return False
     else:
         # Exact character match

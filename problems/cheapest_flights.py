@@ -123,7 +123,7 @@ class CheapestFlights(Problem):
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.log(f"--- Iteration {i} (hop {i+1}/{k+1}) ---")
-            snap(6, f"Iteration {i}: begin hop {i+1}/{k+1}")
+            snap(7, f"Iteration {i}: begin hop {i+1}/{k+1}")
 
             updated_any = False
             for u, v, w in flights:
@@ -146,7 +146,7 @@ class CheapestFlights(Problem):
                         f"  Relax {u}->{v}: {fmt(old_cost)} -> {fmt(new_cost)}"
                     )
                     snap(
-                        11,
+                        12,
                         f"Relax {u}->{v}: cost {fmt(new_cost)}",
                     )
                     updated_any = True
@@ -165,11 +165,11 @@ class CheapestFlights(Problem):
 
             if not updated_any:
                 tracer.log(f"  No updates in iteration {i}, early stop")
-                snap(12, f"No updates, early termination")
+                snap(14, f"No updates, early termination")
                 break
 
             tracer.log(f"End iteration {i}: prices={[fmt(p) for p in prices]}")
-            snap(12, f"End iteration {i}")
+            snap(14, f"End iteration {i}")
 
         # Final result
         tracer.deselect_all_nodes()

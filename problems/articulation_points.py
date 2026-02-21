@@ -150,7 +150,7 @@ class ArticulationPoints(Problem):
             graph.select_node(u)
             graph.set_node_badge(u, f"{disc[u]}/{low[u]}")
             graph.log(f"DFS({u}): disc={disc[u]}, low={low[u]}")
-            snap(14, f"DFS({u}): disc={disc[u]}, low={low[u]}")
+            snap(16, f"DFS({u}): disc={disc[u]}, low={low[u]}")
 
             for v in adj[u]:
                 # Find edge key
@@ -163,7 +163,7 @@ class ArticulationPoints(Problem):
                     graph.select_edge(*edge_key)
                     graph.set_edge_class(*edge_key, "tree")
                     graph.log(f"  Tree edge {u}-{v}, child #{children}")
-                    snap(21, f"Tree edge {u}-{v}")
+                    snap(24, f"Tree edge {u}-{v}")
                     graph.deselect_edge(*edge_key)
 
                     dfs(v)
@@ -172,7 +172,7 @@ class ArticulationPoints(Problem):
                     low[u] = min(low[u], low[v])
                     graph.set_node_badge(u, f"{disc[u]}/{low[u]}")
                     graph.log(f"  Back from {v}: low[{u}] = {low[u]}")
-                    snap(22, f"Update low[{u}]={low[u]}")
+                    snap(25, f"Update low[{u}]={low[u]}")
 
                     # Check articulation point conditions
                     # Condition 1: u is root with 2+ children
@@ -180,14 +180,14 @@ class ArticulationPoints(Problem):
                         ap.add(u)
                         graph.mark_node_error(u)
                         graph.log(f"  AP found: {u} is root with {children} children")
-                        snap(24, f"AP: {u} (root, {children} children)")
+                        snap(27, f"AP: {u} (root, {children} children)")
 
                     # Condition 2: u is not root and low[v] >= disc[u]
                     if par[u] != -1 and low[v] >= disc[u]:
                         ap.add(u)
                         graph.mark_node_error(u)
                         graph.log(f"  AP found: {u} (low[{v}]={low[v]} >= disc[{u}]={disc[u]})")
-                        snap(26, f"AP: {u} (low[{v}]>= disc[{u}])")
+                        snap(29, f"AP: {u} (low[{v}]>= disc[{u}])")
                 else:
                     # Back edge (skip parent to avoid counting the tree edge)
                     if v != par[u]:
@@ -196,7 +196,7 @@ class ArticulationPoints(Problem):
                         low[u] = min(low[u], disc[v])
                         graph.set_node_badge(u, f"{disc[u]}/{low[u]}")
                         graph.log(f"  Back edge {u}-{v}: low[{u}] = min(low[{u}], disc[{v}]) = {low[u]}")
-                        snap(28, f"Back edge {u}-{v}, low[{u}]={low[u]}")
+                        snap(32, f"Back edge {u}-{v}, low[{u}]={low[u]}")
                         graph.deselect_edge(*edge_key)
 
             # Done with u
@@ -204,11 +204,11 @@ class ArticulationPoints(Problem):
                 graph.deselect_node(u)
                 graph.patch_node(u)
                 graph.log(f"DFS({u}): finished (not AP)")
-                snap(30, f"DFS({u}): finished")
+                snap(35, f"DFS({u}): finished")
             else:
                 graph.deselect_node(u)
                 graph.log(f"DFS({u}): finished (is AP)")
-                snap(30, f"DFS({u}): finished (AP)")
+                snap(35, f"DFS({u}): finished (AP)")
 
         # Main loop
         for i in range(n):
@@ -222,5 +222,5 @@ class ArticulationPoints(Problem):
         graph.deselect_all_edges()
         ap_str = ", ".join(str(x) for x in sorted(ap)) if ap else "none"
         graph.log(f"Articulation points: [{ap_str}]")
-        snap(33, f"Done! Articulation points: [{ap_str}]")
+        snap(35, f"Done! Articulation points: [{ap_str}]")
         return steps

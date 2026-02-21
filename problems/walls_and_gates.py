@@ -120,14 +120,14 @@ class WallsAndGates(Problem):
                     queue.append((i, j))
 
         tracer.log(f"Gates found: {len(queue)}")
-        snap(10, f"{len(queue)} gates enqueued as BFS sources")
+        snap(11, f"{len(queue)} gates enqueued as BFS sources")
 
         while queue:
             r, c = queue.popleft()
 
             tracer.deselect_all()
             tracer.select(r, c)
-            snap(13, f"Process ({r},{c}), dist={rooms[r][c]}")
+            snap(15, f"Process ({r},{c}), dist={rooms[r][c]}")
 
             for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 nr, nc = r + dr, c + dc
@@ -138,7 +138,7 @@ class WallsAndGates(Problem):
                     tracer.set_value(nr, nc, str(rooms[nr][nc]))
                     tracer.patch(nr, nc)
                     tracer.log(f"  Room ({nr},{nc}) = {rooms[nr][nc]}")
-                    snap(18, f"Room ({nr},{nc}) dist = {rooms[nr][nc]}")
+                    snap(20, f"Room ({nr},{nc}) dist = {rooms[nr][nc]}")
 
             tracer.deselect(r, c)
 

@@ -132,7 +132,7 @@ class MaxProbabilityPath(Problem):
             f"Nodes: {n}, start={start}, end={end}, "
             f"maximize probability product"
         )
-        snap(8, f"start={start}, end={end}; prob[{start}]=1.0")
+        snap(9, f"start={start}, end={end}; prob[{start}]=1.0")
 
         # Modified Dijkstra with max-heap
         heap: list[tuple[float, int]] = [(-1.0, start)]
@@ -147,20 +147,20 @@ class MaxProbabilityPath(Problem):
             tracer.select_node(u)
             tracer.set_node_color(u, "#f9e2af")  # yellow for current
             tracer.log(f"Pop node {u}, prob={p:.4f}")
-            snap(12, f"Process node {u}, prob={p:.4f}")
+            snap(14, f"Process node {u}, prob={p:.4f}")
 
             if u == end:
                 tracer.set_node_color(u, "#a6e3a1")
                 tracer.set_node_badge(u, f"{p:.4f}", "#a6e3a1")
                 tracer.patch_node(u)
                 tracer.log(f"Reached end node {end}! prob={p:.4f}")
-                snap(15, f"Reached end={end}! prob={p:.4f}")
+                snap(17, f"Reached end={end}! prob={p:.4f}")
                 break
 
             if p < prob[u]:
                 tracer.deselect_node(u)
                 tracer.log(f"  Skip stale entry for node {u}")
-                snap(17, f"Skip stale node {u}")
+                snap(19, f"Skip stale node {u}")
                 continue
 
             # Mark current node as processed
@@ -188,7 +188,7 @@ class MaxProbabilityPath(Problem):
                         f"(x{w})"
                     )
                     snap(
-                        21,
+                        24,
                         f"prob[{v}] = {new_p:.4f} via {u}",
                     )
                 else:

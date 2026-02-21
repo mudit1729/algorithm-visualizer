@@ -164,13 +164,13 @@ class WordSearchII(Problem):
             trie_word[node] = w
             tracer.log(f"  Inserted \"{w}\" into trie")
 
-        snap(12, "Trie built from word list")
+        snap(13, "Trie built from word list")
 
         # =============================================
         # PHASE 2: DFS SEARCH ON BOARD
         # =============================================
         tracer.log("--- DFS search using Trie ---")
-        snap(14, "Begin DFS from each cell")
+        snap(16, "Begin DFS from each cell")
 
         found: list[str] = []
         cells_explored = 0
@@ -198,7 +198,7 @@ class WordSearchII(Problem):
                 tracer.select(pr, pc)
 
             tracer.log(f"  Explore ({r},{c})='{ch}'")
-            snap(19, f"Explore ({r},{c})='{ch}'")
+            snap(22, f"Explore ({r},{c})='{ch}'")
 
             # Check if we found a word
             if trie_word[child] is not None:
@@ -211,7 +211,7 @@ class WordSearchII(Problem):
                     tracer.mark_on_path(pr, pc)
                     tracer.patch(pr, pc)
                 tracer.log(f"  FOUND \"{word_found}\"!")
-                snap(22, f"Found word \"{word_found}\"!")
+                snap(25, f"Found word \"{word_found}\"!")
 
                 # Clear path markers (keep patched)
                 for pr, pc in path:
@@ -246,7 +246,7 @@ class WordSearchII(Problem):
             for pr, pc in path:
                 tracer.select(pr, pc)
 
-            snap(30, f"Backtrack from ({r},{c})")
+            snap(34, f"Backtrack from ({r},{c})")
 
         # Try each cell as a starting point
         for i in range(m):
@@ -257,7 +257,7 @@ class WordSearchII(Problem):
                     tracer.deselect_all()
                     tracer.clear_all_overlays()
                     tracer.log(f"Start DFS at ({i},{j})='{board[i][j]}'")
-                    snap(33, f"Start DFS at ({i},{j})='{board[i][j]}'")
+                    snap(38, f"Start DFS at ({i},{j})='{board[i][j]}'")
                     dfs(i, j, root, [])
             if cells_explored > max_explore:
                 break
@@ -285,7 +285,7 @@ class WordSearchII(Problem):
                     for pr, pc in path:
                         tracer.patch(pr, pc)
                         tracer.mark_on_path(pr, pc)
-            snap(36, f"Result: found {found}")
+            snap(39, f"Result: found {found}")
         else:
             tracer.log("No words found")
             snap(36, "No words found")

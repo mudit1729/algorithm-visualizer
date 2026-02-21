@@ -139,13 +139,13 @@ class PrimsMST(Problem):
 
             if in_mst[u]:
                 tracer.log(f"Skip node {u} (already in MST)")
-                snap(11, f"Skip node {u}, in MST")
+                snap(12, f"Skip node {u}, in MST")
                 continue
 
             # Add node to MST
             tracer.select_node(u)
             tracer.log(f"Pop node {u} with key {w}")
-            snap(10, f"Pop node {u}, key = {w}")
+            snap(11, f"Pop node {u}, key = {w}")
 
             in_mst[u] = True
             mst_cost += w
@@ -159,10 +159,10 @@ class PrimsMST(Problem):
                 tracer.patch_edge(*edge_key)
                 tracer.set_edge_class(*edge_key, "relaxed")
                 tracer.log(f"  MST edge: {p}-{u} (w={w}), total cost = {mst_cost}")
-                snap(13, f"MST edge {p}-{u}, cost = {mst_cost}")
+                snap(14, f"MST edge {p}-{u}, cost = {mst_cost}")
             else:
                 tracer.log(f"  Start node {u}, total cost = {mst_cost}")
-                snap(12, f"Start node {u}")
+                snap(13, f"Start node {u}")
 
             # Examine neighbors
             for v, weight in graph[u]:
@@ -173,7 +173,7 @@ class PrimsMST(Problem):
 
                 tracer.select_edge(*edge_key)
                 tracer.log(f"  Examine edge {u}-{v} (w={weight})")
-                snap(16, f"Check edge {u}-{v}, w={weight}")
+                snap(18, f"Check edge {u}-{v}, w={weight}")
 
                 if weight < key[v]:
                     old_key = key[v]
@@ -183,10 +183,10 @@ class PrimsMST(Problem):
                     tracer.set_node_badge(v, str(weight))
                     old_str = "INF" if old_key == float("inf") else str(int(old_key))
                     tracer.log(f"  Update key[{v}]: {old_str} -> {weight}")
-                    snap(18, f"key[{v}]: {old_str} -> {weight}")
+                    snap(20, f"key[{v}]: {old_str} -> {weight}")
                 else:
                     tracer.log(f"  No update for {v} (key={int(key[v])} <= {weight})")
-                    snap(16, f"No update for {v}")
+                    snap(18, f"No update for {v}")
 
                 tracer.deselect_edge(*edge_key)
 
@@ -198,5 +198,5 @@ class PrimsMST(Problem):
             if parent[i] != -1:
                 mst_edges.append(f"{parent[i]}-{i}")
         tracer.log(f"MST cost = {mst_cost}, edges: {', '.join(mst_edges)}")
-        snap(21, f"MST complete, total cost = {mst_cost}")
+        snap(22, f"MST complete, total cost = {mst_cost}")
         return steps

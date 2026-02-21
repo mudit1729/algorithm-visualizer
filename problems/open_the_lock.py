@@ -138,7 +138,7 @@ class OpenTheLock(Problem):
             aux.set_items("BFS Queue", [("Size", str(level_size))])
             aux.set_items("Visited", [("Count", str(len(visited)))])
             tracer.log(f"--- BFS Level {current_moves} ({level_size} states) ---")
-            snap(8, f"Level {current_moves}: {level_size} states to process")
+            snap(9, f"Level {current_moves}: {level_size} states to process")
 
             found = False
             shown_this_level = 0
@@ -154,7 +154,7 @@ class OpenTheLock(Problem):
                         tracer.patch(0, i)
                     tracer.log(f"Target reached! Moves = {moves}")
                     aux.set_items("BFS Queue", [("Size", "0")])
-                    snap(11, f"Target '{target}' reached in {moves} moves!")
+                    snap(12, f"Target '{target}' reached in {moves} moves!")
                     result = moves
                     found = True
                     break
@@ -166,7 +166,7 @@ class OpenTheLock(Problem):
                     for i in range(4):
                         tracer.select(0, i)
                     tracer.log(f"Dequeue '{state}' (moves={moves})")
-                    snap(9, f"Process '{state}', moves={moves}")
+                    snap(10, f"Process '{state}', moves={moves}")
                     tracer.deselect_all()
                     shown_this_level += 1
 
@@ -183,7 +183,7 @@ class OpenTheLock(Problem):
                                 for j in range(4):
                                     tracer.mark_error(0, j)
                                 tracer.log(f"  '{new_state}' is a deadend, skip")
-                                snap(17, f"'{new_state}' is deadend, skip")
+                                snap(18, f"'{new_state}' is deadend, skip")
                                 tracer.clear_all_errors()
                                 deadend_shown += 1
                             continue
@@ -207,7 +207,7 @@ class OpenTheLock(Problem):
                                     [("Count", str(len(visited)))],
                                 )
                                 snap(
-                                    19,
+                                    21,
                                     f"Enqueue '{new_state}' (moves={moves + 1})",
                                 )
                                 tracer.deselect_all()
@@ -223,7 +223,7 @@ class OpenTheLock(Problem):
                 aux.set_items("BFS Queue", [("Size", str(len(queue)))])
                 aux.set_items("Visited", [("Count", str(len(visited)))])
                 snap(
-                    19,
+                    21,
                     f"Level {current_moves}: +{new_states_this_level} new, "
                     f"queue={len(queue)}",
                 )
@@ -235,6 +235,6 @@ class OpenTheLock(Problem):
             for i in range(4):
                 tracer.mark_error(0, i)
             tracer.log(f"Cannot reach target '{target}'. Return -1")
-            snap(22, f"No path to '{target}' -> return -1")
+            snap(21, f"No path to '{target}' -> return -1")
 
         return steps

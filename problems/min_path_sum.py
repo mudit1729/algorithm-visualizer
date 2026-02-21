@@ -116,13 +116,13 @@ class MinPathSum(Problem):
             tracer.select(i, 0)
             tracer.select(i - 1, 0)
             tracer.log(f"dp[{i}][0] = dp[{i-1}][0]({dp[i-1][0]}) + {grid[i][0]} = {dp[i][0]}")
-            snap(7, f"dp[{i}][0] = {dp[i-1][0]} + {grid[i][0]}")
+            snap(8, f"dp[{i}][0] = {dp[i-1][0]} + {grid[i][0]}")
 
             tracer.deselect_all()
             tracer.set_overlay(i, 0, str(dp[i][0]), color="#3b82f6")
             tracer.set_arrow(i, 0, "down" if i < m - 1 else "")
             tracer.patch(i, 0)
-            snap(7, f"dp[{i}][0] = {dp[i][0]}")
+            snap(8, f"dp[{i}][0] = {dp[i][0]}")
 
         # Fill first row
         for j in range(1, n):
@@ -131,13 +131,13 @@ class MinPathSum(Problem):
             tracer.select(0, j)
             tracer.select(0, j - 1)
             tracer.log(f"dp[0][{j}] = dp[0][{j-1}]({dp[0][j-1]}) + {grid[0][j]} = {dp[0][j]}")
-            snap(9, f"dp[0][{j}] = {dp[0][j-1]} + {grid[0][j]}")
+            snap(11, f"dp[0][{j}] = {dp[0][j-1]} + {grid[0][j]}")
 
             tracer.deselect_all()
             tracer.set_overlay(0, j, str(dp[0][j]), color="#3b82f6")
             tracer.set_arrow(0, j, "right" if j < n - 1 else "")
             tracer.patch(0, j)
-            snap(9, f"dp[0][{j}] = {dp[0][j]}")
+            snap(11, f"dp[0][{j}] = {dp[0][j]}")
 
         # Fill rest of DP table
         for i in range(1, m):

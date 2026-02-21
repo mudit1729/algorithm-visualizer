@@ -161,19 +161,19 @@ class KosarajuSCC(Problem):
             graph.select_node(u)
             graph.set_node_color(u, "#f9e2af")  # yellow = in-progress
             graph.log(f"Pass1 DFS({u}): visit")
-            snap(7, f"Pass1: visit node {u}")
+            snap(8, f"Pass1: visit node {u}")
 
             for v in adj[u]:
                 graph.select_edge(u, v)
                 if not visited[v]:
                     graph.set_edge_class(u, v, "tree")
                     graph.log(f"  Edge {u}->{v}: tree edge")
-                    snap(9, f"Pass1: tree edge {u}->{v}")
+                    snap(10, f"Pass1: tree edge {u}->{v}")
                     graph.deselect_edge(u, v)
                     dfs1(v)
                 else:
                     graph.log(f"  Edge {u}->{v}: already visited")
-                    snap(9, f"Pass1: skip {u}->{v}")
+                    snap(10, f"Pass1: skip {u}->{v}")
                     graph.deselect_edge(u, v)
 
             # Finish: push to stack
@@ -184,16 +184,16 @@ class KosarajuSCC(Problem):
             graph.set_node_badge(u, f"f={len(finish_stack)}")
             aux.push("Finish Stack", str(u), f"finish #{len(finish_stack)}")
             graph.log(f"Pass1 DFS({u}): finished, push to stack (order={len(finish_stack)})")
-            snap(11, f"Pass1: finish {u}, push to stack")
+            snap(13, f"Pass1: finish {u}, push to stack")
 
         for i in range(n):
             if not visited[i]:
                 graph.log(f"Pass1: start DFS from node {i}")
-                snap(13, f"Pass1: start DFS from {i}")
+                snap(15, f"Pass1: start DFS from {i}")
                 dfs1(i)
 
         graph.log(f"Pass1 complete. Finish stack (top to bottom): {list(reversed(finish_stack))}")
-        snap(15, "Pass 1 complete")
+        snap(18, "Pass 1 complete")
 
         # ===== Pass 2: DFS on transposed graph =====
         graph.log("=== Pass 2: DFS on transposed graph ===")
@@ -278,5 +278,5 @@ class KosarajuSCC(Problem):
         graph_t.deselect_all_edges()
         all_sccs = ["{" + ",".join(str(x) for x in s) + "}" for s in sccs]
         graph_t.log(f"All SCCs: {', '.join(all_sccs)}")
-        snap2(42, f"Done! Found {len(sccs)} SCCs")
+        snap2(41, f"Done! Found {len(sccs)} SCCs")
         return steps

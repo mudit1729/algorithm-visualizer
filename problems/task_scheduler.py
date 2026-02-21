@@ -199,7 +199,7 @@ class TaskScheduler(Problem):
                     f"t={time_step}: Execute '{task_name}' "
                     f"(remaining={remaining})"
                 )
-                snap(14, f"t={time_step}: Execute '{task_name}'")
+                snap(16, f"t={time_step}: Execute '{task_name}'")
 
                 if remaining > 0:
                     cooldown_queue.append(
@@ -214,12 +214,12 @@ class TaskScheduler(Problem):
                     graph.log(
                         f"  '{task_name}' on cooldown until t={time_step + cooldown_n}"
                     )
-                    snap(16, f"'{task_name}' cooling until t={time_step + cooldown_n}")
+                    snap(18, f"'{task_name}' cooling until t={time_step + cooldown_n}")
                 else:
                     graph.set_node_color(task_name, "#a6e3a1")
                     graph.patch_node(task_name)
                     graph.log(f"  '{task_name}' fully completed!")
-                    snap(14, f"'{task_name}' done!")
+                    snap(16, f"'{task_name}' done!")
 
                 prev_task_node = task_name
             else:
@@ -240,7 +240,7 @@ class TaskScheduler(Problem):
 
                 aux.push("Schedule", "idle", f"t={time_step}")
                 graph.log(f"t={time_step}: IDLE (all tasks on cooldown)")
-                snap(19, f"t={time_step}: idle")
+                snap(22, f"t={time_step}: idle")
                 prev_task_node = "idle"
 
         # Apply layered layout at the end for timeline view
@@ -254,6 +254,6 @@ class TaskScheduler(Problem):
         graph.log(f"Total time units: {len(schedule)}")
         aux.set_items("Heap", [])
         aux.set_items("Cooldown", [])
-        snap(25, f"Done! Total time = {len(schedule)}")
+        snap(24, f"Done! Total time = {len(schedule)}")
 
         return steps

@@ -119,23 +119,23 @@ class ImplementTrie(Problem):
         trie_is_end[root_id] = False
 
         tracer.log("Initialize empty Trie with root node")
-        snap(7, "Create empty Trie")
+        snap(8, "Create empty Trie")
 
         # =============================================
         # PHASE 1: INSERT WORDS
         # =============================================
         tracer.log("--- Phase 1: Insert words ---")
-        snap(7, "Phase 1: Insert words into Trie")
+        snap(8, "Phase 1: Insert words into Trie")
 
         for word in words_to_insert:
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.log(f"insert(\"{word}\")")
-            snap(9, f"insert(\"{word}\")")
+            snap(11, f"insert(\"{word}\")")
 
             current = root_id
             tracer.select_node(current)
-            snap(10, f"Start at root")
+            snap(12, f"Start at root")
 
             for i, ch in enumerate(word):
                 # Check if child exists
@@ -145,7 +145,7 @@ class ImplementTrie(Problem):
                     tracer.select_edge(current, child_id)
                     tracer.select_node(child_id)
                     tracer.log(f"  '{ch}' exists, traverse to node {child_id}")
-                    snap(13, f"'{ch}' already exists, traverse")
+                    snap(15, f"'{ch}' already exists, traverse")
                     tracer.deselect_node(current)
                     tracer.deselect_edge(current, child_id)
                     current = child_id
@@ -159,7 +159,7 @@ class ImplementTrie(Problem):
                     tracer.select_edge(current, new_id)
                     tracer.select_node(new_id)
                     tracer.log(f"  '{ch}' not found, create node {new_id}")
-                    snap(14, f"Create new node for '{ch}'")
+                    snap(16, f"Create new node for '{ch}'")
                     tracer.deselect_node(current)
                     tracer.deselect_edge(current, new_id)
                     current = new_id
@@ -168,7 +168,7 @@ class ImplementTrie(Problem):
             tracer.set_end(current, True)
             trie_is_end[current] = True
             tracer.log(f"  Mark node {current} as end of \"{word}\"")
-            snap(16, f"Mark end of word \"{word}\"")
+            snap(19, f"Mark end of word \"{word}\"")
 
             # Patch the inserted path to show completion
             path_nodes, path_edges = _trace_word_path(
@@ -181,7 +181,7 @@ class ImplementTrie(Problem):
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.log(f"  \"{word}\" inserted successfully")
-            snap(16, f"\"{word}\" inserted")
+            snap(19, f"\"{word}\" inserted")
 
             # Clear patches for next word
             for nid in path_nodes:
@@ -196,14 +196,14 @@ class ImplementTrie(Problem):
         tracer.deselect_all_edges()
         tracer.clear_all_node_errors()
         tracer.log("--- Phase 2: Search words ---")
-        snap(18, "Phase 2: Search for words")
+        snap(21, "Phase 2: Search for words")
 
         for word in words_to_search:
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.clear_all_node_errors()
             tracer.log(f"search(\"{word}\")")
-            snap(19, f"search(\"{word}\")")
+            snap(22, f"search(\"{word}\")")
 
             current = root_id
             tracer.select_node(current)
@@ -216,14 +216,14 @@ class ImplementTrie(Problem):
                     tracer.select_edge(current, child_id)
                     tracer.select_node(child_id)
                     tracer.log(f"  '{ch}' found, move to node {child_id}")
-                    snap(22, f"Follow '{ch}' to node {child_id}")
+                    snap(26, f"Follow '{ch}' to node {child_id}")
                     last_node = child_id
                     current = child_id
                 else:
                     # Character not found
                     tracer.mark_node_error(current)
                     tracer.log(f"  '{ch}' NOT found from node {current}")
-                    snap(23, f"'{ch}' not found - search fails")
+                    snap(27, f"'{ch}' not found - search fails")
                     found = False
                     break
 
@@ -241,7 +241,7 @@ class ImplementTrie(Problem):
                     for edge in path_edges:
                         tracer.patch_edge(*edge)
                     tracer.log(f"  \"{word}\" found! (is_end = True)")
-                    snap(25, f"\"{word}\" found!")
+                    snap(29, f"\"{word}\" found!")
 
                     for nid in path_nodes:
                         tracer.depatch_node(nid)
@@ -251,10 +251,10 @@ class ImplementTrie(Problem):
                     # Prefix exists but not a complete word
                     tracer.mark_node_error(current)
                     tracer.log(f"  \"{word}\" not found (is_end = False)")
-                    snap(25, f"\"{word}\" not found (not a complete word)")
+                    snap(29, f"\"{word}\" not found (not a complete word)")
             else:
                 tracer.log(f"  \"{word}\" not found (missing character)")
-                snap(23, f"\"{word}\" not found")
+                snap(27, f"\"{word}\" not found")
 
             tracer.clear_all_node_errors()
 
@@ -265,14 +265,14 @@ class ImplementTrie(Problem):
         tracer.deselect_all_edges()
         tracer.clear_all_node_errors()
         tracer.log("--- Phase 3: Check prefixes ---")
-        snap(27, "Phase 3: startsWith checks")
+        snap(31, "Phase 3: startsWith checks")
 
         for prefix in prefixes_to_check:
             tracer.deselect_all_nodes()
             tracer.deselect_all_edges()
             tracer.clear_all_node_errors()
             tracer.log(f"startsWith(\"{prefix}\")")
-            snap(28, f"startsWith(\"{prefix}\")")
+            snap(32, f"startsWith(\"{prefix}\")")
 
             current = root_id
             tracer.select_node(current)
@@ -304,7 +304,7 @@ class ImplementTrie(Problem):
                 for edge in path_edges:
                     tracer.patch_edge(*edge)
                 tracer.log(f"  startsWith(\"{prefix}\") = True")
-                snap(34, f"Prefix \"{prefix}\" exists!")
+                snap(32, f"Prefix \"{prefix}\" exists!")
 
                 for nid in path_nodes:
                     tracer.depatch_node(nid)
@@ -321,7 +321,7 @@ class ImplementTrie(Problem):
         tracer.deselect_all_edges()
         tracer.clear_all_node_errors()
         tracer.log("All operations complete")
-        snap(34, "All operations complete")
+        snap(32, "All operations complete")
 
         return steps
 

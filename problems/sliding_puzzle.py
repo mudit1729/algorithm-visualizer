@@ -151,7 +151,7 @@ class SlidingPuzzle(Problem):
         aux.set_items("Moves", [("Current", "0")])
 
         tracer.log("Initialize BFS")
-        snap(10, "Initialize BFS from start state")
+        snap(11, "Initialize BFS from start state")
 
         result = -1
         # To reconstruct the solution path, store parents
@@ -173,7 +173,7 @@ class SlidingPuzzle(Problem):
                 "Queue", [("States", str(len(queue)))]
             )
             tracer.log(f"Process {format_board(state)}, moves={moves}")
-            snap(13, f"Process {format_board(state)}, moves={moves}")
+            snap(14, f"Process {format_board(state)}, moves={moves}")
 
             found = False
             for nei in swaps[z]:
@@ -198,7 +198,7 @@ class SlidingPuzzle(Problem):
 
                     aux.set_items("Moves", [("Solution", str(result))])
                     tracer.log(f"Solved in {result} moves!")
-                    snap(17, f"Solved! Target reached in {result} moves!")
+                    snap(24, f"Solved! Target reached in {result} moves!")
                     found = True
                     break
 
@@ -217,7 +217,7 @@ class SlidingPuzzle(Problem):
                         f"({nr},{nc})->({zr},{zc}) => {format_board(new_state)}"
                     )
                     snap(
-                        20,
+                        21,
                         f"Slide tile {tile} -> {format_board(new_state)}",
                     )
                     tracer.deselect_all()
@@ -232,7 +232,7 @@ class SlidingPuzzle(Problem):
                 for c in range(3):
                     tracer.mark_error(r, c)
             tracer.log("No solution found! Return -1")
-            snap(22, "Unsolvable -> return -1")
+            snap(24, "Unsolvable -> return -1")
         else:
             # Reconstruct and show the solution path
             path: list[str] = []
@@ -266,6 +266,6 @@ class SlidingPuzzle(Problem):
 
                 aux.set_items("Moves", [("Step", f"{step_idx}/{len(path) - 1}")])
                 tracer.log(f"  Step {step_idx}: {format_board(pstate)}")
-                snap(17, f"Solution step {step_idx}: {format_board(pstate)}")
+                snap(18, f"Solution step {step_idx}: {format_board(pstate)}")
 
         return steps

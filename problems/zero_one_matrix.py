@@ -125,7 +125,7 @@ class ZeroOneMatrix(Problem):
                     zero_count += 1
 
         tracer.log(f"Found {zero_count} zero cells as BFS sources")
-        snap(9, f"{zero_count} zero cells enqueued (dist=0)")
+        snap(10, f"{zero_count} zero cells enqueued (dist=0)")
 
         # BFS: expand level by level
         level = 0
@@ -139,7 +139,7 @@ class ZeroOneMatrix(Problem):
 
                 tracer.deselect_all()
                 tracer.select(r, c)
-                snap(12, f"Process ({r},{c}), dist={dist[r][c]}")
+                snap(14, f"Process ({r},{c}), dist={dist[r][c]}")
 
                 for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                     nr, nc = r + dr, c + dc
@@ -157,7 +157,7 @@ class ZeroOneMatrix(Problem):
                                 f"  ({nr},{nc}) dist = {dist[nr][nc]}"
                             )
                             snap(
-                                17,
+                                19,
                                 f"({nr},{nc}) distance = {dist[nr][nc]}",
                             )
 
@@ -168,7 +168,7 @@ class ZeroOneMatrix(Problem):
 
             if level_cells:
                 tracer.deselect_all()
-                snap(18, f"Level {dist[level_cells[0][0]][level_cells[0][1]]} complete: {len(level_cells)} cells")
+                snap(21, f"Level {dist[level_cells[0][0]][level_cells[0][1]]} complete: {len(level_cells)} cells")
 
         # Final summary
         tracer.deselect_all()
@@ -179,6 +179,6 @@ class ZeroOneMatrix(Problem):
                     max_dist = int(dist[r][c])
 
         tracer.log(f"All distances computed. Max distance = {max_dist}")
-        snap(20, f"Complete. Max distance to nearest 0 = {max_dist}")
+        snap(21, f"Complete. Max distance to nearest 0 = {max_dist}")
 
         return steps
