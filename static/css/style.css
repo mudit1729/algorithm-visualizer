@@ -57,18 +57,19 @@ html, body {
 }
 
 .landing-left {
-    flex: 60;
+    flex: 1;
     overflow-y: auto;
     padding: 60px 40px 60px 48px;
     min-width: 0;
 }
 
 .landing-right {
-    flex: 40;
+    flex: none;
+    width: fit-content;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 36px;
+    padding: 40px 28px;
     overflow-y: auto;
     border-left: 1px solid var(--border);
     background: var(--bg-secondary);
