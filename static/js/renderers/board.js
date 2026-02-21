@@ -70,6 +70,9 @@ class BoardRenderer {
             'S': '#89dceb',         // safe / marked
             'W': '#585b70',         // wall
             '.': '#313244',         // empty room
+            'P': '#89b4fa',         // pacific
+            'A': '#cba6f7',         // atlantic
+            'B': '#f9e2af',         // both (pacific + atlantic)
         };
 
         // Draw board shadow
@@ -144,6 +147,62 @@ class BoardRenderer {
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
                         ctx.fillText('\u265B', x + cellSize / 2, y + cellSize / 2 + 1);
+                    }
+                }
+
+                // On-path glow (drawn on top of cell fill, before border)
+                if (cell.on_path) {
+                    ctx.save();
+                    ctx.shadowColor = '#a6e3a1';
+                    ctx.shadowBlur = 8;
+                    ctx.strokeStyle = '#a6e3a1';
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeRect(x + 2, y + 2, cellSize - 4, cellSize - 4);
+                    ctx.restore();
+                }
+
+                // Overlay text (top-right corner)
+                if (cell.overlay_text) {
+                    ctx.fillStyle = cell.overlay_color || '#89b4fa';
+                    ctx.font = `bold ${Math.max(9, Math.floor(cellSize * 0.24))}px -apple-system, sans-serif`;
+                    ctx.textAlign = 'right';
+                    ctx.textBaseline = 'top';
+                    ctx.fillText(cell.overlay_text, x + cellSize - 3, y + 2);
+                }
+
+                // Arrow direction indicator
+                if (cell.arrow_dir) {
+                    const arrowMap = {
+                        'up': [0, -1], 'down': [0, 1], 'left': [-1, 0], 'right': [1, 0],
+                        'ul': [-0.707, -0.707], 'ur': [0.707, -0.707],
+                        'dl': [-0.707, 0.707], 'dr': [0.707, 0.707],
+                    };
+                    const dir = arrowMap[cell.arrow_dir];
+                    if (dir) {
+                        const cx = x + cellSize / 2;
+                        const cy = y + cellSize / 2;
+                        const aLen = cellSize * 0.22;
+                        ctx.strokeStyle = cell.overlay_color || '#89b4fa';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(cx - dir[0] * aLen, cy - dir[1] * aLen);
+                        ctx.lineTo(cx + dir[0] * aLen, cy + dir[1] * aLen);
+                        ctx.stroke();
+                        // Arrowhead
+                        const angle = Math.atan2(dir[1], dir[0]);
+                        const aSize = 5;
+                        ctx.beginPath();
+                        ctx.moveTo(cx + dir[0] * aLen, cy + dir[1] * aLen);
+                        ctx.lineTo(
+                            cx + dir[0] * aLen - aSize * Math.cos(angle - 0.5),
+                            cy + dir[1] * aLen - aSize * Math.sin(angle - 0.5)
+                        );
+                        ctx.moveTo(cx + dir[0] * aLen, cy + dir[1] * aLen);
+                        ctx.lineTo(
+                            cx + dir[0] * aLen - aSize * Math.cos(angle + 0.5),
+                            cy + dir[1] * aLen - aSize * Math.sin(angle + 0.5)
+                        );
+                        ctx.stroke();
                     }
                 }
 

@@ -439,6 +439,7 @@ html, body {
 #viz-panel {
     flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -447,7 +448,8 @@ html, body {
 
 #viz-canvas {
     width: 100%;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
 }
 
 #divider {
@@ -766,4 +768,69 @@ html, body {
     background: var(--accent);
     border: none;
     cursor: pointer;
+}
+
+/* ========================= */
+/* === AUX PANELS ========== */
+/* ========================= */
+
+#aux-panel-container {
+    display: none;
+    flex-direction: row;
+    gap: 16px;
+    padding: 8px 16px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--border);
+    background: var(--bg-secondary);
+    max-height: 120px;
+    overflow-y: auto;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.aux-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 80px;
+}
+
+.aux-panel-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+}
+
+.aux-panel-items {
+    display: flex;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+.aux-panel-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-family: "SF Mono", "Fira Code", Menlo, monospace;
+    color: var(--text-primary);
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.aux-panel-item.aux-selected {
+    border-color: var(--yellow);
+    background: rgba(249, 226, 175, 0.15);
+}
+
+.aux-panel-item.aux-patched {
+    border-color: var(--green);
+    background: rgba(166, 227, 161, 0.15);
+}
+
+.aux-panel-item.aux-error {
+    border-color: var(--red);
+    background: rgba(243, 139, 168, 0.15);
 }
