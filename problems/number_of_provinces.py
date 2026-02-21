@@ -42,7 +42,7 @@ class NumberOfProvinces(Problem):
 
     @staticmethod
     def topic() -> str:
-        return "Union-Find"
+        return "Union Find"
 
     @staticmethod
     def subtopic() -> str:

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Landing elements ---
     const problemPicker = document.getElementById('problem-picker');
+    const showcaseGallery = document.getElementById('showcase-gallery');
     const detailPanel = document.getElementById('detail-panel');
     const detailOverlay = document.getElementById('detail-overlay');
     const detailClose = document.getElementById('detail-close');
@@ -168,6 +169,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 
+    // --- Explicit topic display order ---
+    const TOPIC_ORDER = [
+        "Graph / DFS", "Graph / BFS", "Topological Sort", "Backtracking",
+        "Dynamic Programming", "Shortest Path", "Minimum Spanning Tree",
+        "Greedy", "Tree / BFS", "Trie", "Union Find",
+    ];
+
     // --- Build problem picker (grouped by topic > subtopic) ---
     function buildPicker(problems) {
         problemPicker.innerHTML = '';
@@ -181,7 +189,12 @@ document.addEventListener('DOMContentLoaded', () => {
             topicMap.get(p.subtopic).push(p);
         });
 
-        groups.forEach((subtopics, topic) => {
+        // Sort by explicit order; unknown topics go at the end
+        const sorted = new Map();
+        TOPIC_ORDER.forEach(t => { if (groups.has(t)) sorted.set(t, groups.get(t)); });
+        groups.forEach((v, t) => { if (!sorted.has(t)) sorted.set(t, v); });
+
+        sorted.forEach((subtopics, topic) => {
             const topicDiv = document.createElement('div');
             topicDiv.className = 'topic-group';
 
@@ -220,6 +233,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             problemPicker.appendChild(topicDiv);
+        });
+    }
+
+    // --- Showcase gallery data ---
+    const SHOWCASE_ITEMS = [
+        { problem: "Dijkstra's Shortest Path", img: "/screenshots/dijkstra.png", caption: "Dijkstra's Shortest Path" },
+        { problem: "N-Queens", img: "/screenshots/n_queens.png", caption: "N-Queens" },
+        { problem: "Implement Trie", img: "/screenshots/implement_trie.png", caption: "Implement Trie" },
+    ];
+
+    function buildShowcase(problems) {
+        showcaseGallery.innerHTML = '';
+        SHOWCASE_ITEMS.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'showcase-card';
+
+            const img = document.createElement('img');
+            img.src = item.img;
+            img.alt = item.caption;
+            img.loading = 'lazy';
+            card.appendChild(img);
+
+            const caption = document.createElement('div');
+            caption.className = 'showcase-card-caption';
+            caption.textContent = item.caption;
+            card.appendChild(caption);
+
+            // Clicking a showcase card opens the problem detail panel
+            card.addEventListener('click', () => {
+                const p = problems.find(prob => prob.name === item.problem);
+                if (p) {
+                    document.querySelectorAll('.problem-card').forEach(c => c.classList.remove('selected'));
+                    const matchCard = document.querySelector(`.problem-card[data-name="${p.name}"]`);
+                    if (matchCard) {
+                        matchCard.classList.add('selected');
+                        matchCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    openDetailPanel(p);
+                }
+            });
+
+            showcaseGallery.appendChild(card);
         });
     }
 
@@ -402,11 +457,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Init: just load problem list, don't auto-run ---
+    // --- Init: load problem list and build showcase ---
     async function init() {
         const res = await fetch('/api/problems');
         problems = await res.json();
         buildPicker(problems);
+        buildShowcase(problems);
     }
 
     init();

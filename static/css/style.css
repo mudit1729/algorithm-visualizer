@@ -52,15 +52,32 @@ html, body {
 #landing-screen {
     height: 100%;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    overflow-y: auto;
+    flex-direction: row;
+    overflow: hidden;
 }
 
-.landing-content {
-    width: 100%;
-    max-width: 860px;
-    padding: 60px 32px 60px;
+.landing-left {
+    flex: 55;
+    overflow-y: auto;
+    padding: 60px 40px 60px 48px;
+    min-width: 0;
+}
+
+.landing-right {
+    flex: 45;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 48px;
+    overflow-y: auto;
+    border-left: 1px solid var(--border);
+    background: var(--bg-secondary);
+}
+
+@media (max-width: 1024px) {
+    #landing-screen { flex-direction: column; }
+    .landing-left { flex: none; }
+    .landing-right { display: none; }
 }
 
 .landing-title {
@@ -162,6 +179,51 @@ html, body {
 .problem-card:hover .problem-card-arrow,
 .problem-card.selected .problem-card-arrow {
     transform: translateX(2px);
+    color: var(--accent);
+}
+
+/* --- Showcase Gallery (right pane) --- */
+#showcase-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 380px;
+}
+
+.showcase-card {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    transition: all 0.2s ease;
+}
+
+.showcase-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(137, 180, 250, 0.15);
+    transform: translateY(-2px);
+}
+
+.showcase-card img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+}
+
+.showcase-card-caption {
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: center;
+    background: var(--bg-surface);
+}
+
+.showcase-card:hover .showcase-card-caption {
     color: var(--accent);
 }
 

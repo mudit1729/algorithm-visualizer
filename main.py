@@ -3,7 +3,7 @@ from __future__ import annotations
 import webbrowser
 from threading import Timer
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 from flask_compress import Compress
 
 from problems.registry import discover_problems
@@ -33,6 +33,11 @@ def _coerce_bool(value: object, default: bool = True) -> bool:
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/screenshots/<path:filename>")
+def serve_screenshot(filename):
+    return send_from_directory("screenshots", filename)
 
 
 @app.route("/api/problems")

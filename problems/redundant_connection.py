@@ -38,7 +38,7 @@ class RedundantConnection(Problem):
 
     @staticmethod
     def topic() -> str:
-        return "Union-Find"
+        return "Union Find"
 
     @staticmethod
     def subtopic() -> str:
