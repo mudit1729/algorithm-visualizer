@@ -96,4 +96,4 @@ def open_browser():
 
 if __name__ == "__main__":
     Timer(1.0, open_browser).start()
-    app.run(debug=False, port=PORT)
+    app.run(debug=False, port=PORT, host="0.0.0.0")
