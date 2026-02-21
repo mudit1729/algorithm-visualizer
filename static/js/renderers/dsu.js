@@ -10,7 +10,7 @@ class DSURenderer {
         const canvas = this.canvas;
         const ctx = this.ctx;
 
-        const rect = canvas.parentElement.getBoundingClientRect();
+        const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;

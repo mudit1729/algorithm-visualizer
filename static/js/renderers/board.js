@@ -11,7 +11,7 @@ class BoardRenderer {
         const ctx = this.ctx;
 
         // Set canvas size to match CSS size (handle HiDPI)
-        const rect = canvas.parentElement.getBoundingClientRect();
+        const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;

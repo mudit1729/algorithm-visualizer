@@ -11,7 +11,7 @@ class GraphRenderer {
         const ctx = this.ctx;
 
         // Handle HiDPI
-        const rect = canvas.parentElement.getBoundingClientRect();
+        const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;
