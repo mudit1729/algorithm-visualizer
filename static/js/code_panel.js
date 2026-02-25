@@ -90,6 +90,22 @@ class CodePanel {
         return result;
     }
 
+    highlightLines(startLine, endLine) {
+        this.lines.forEach(el => el.classList.remove('voice-highlight'));
+        for (let i = startLine - 1; i < endLine && i < this.lines.length; i++) {
+            if (i >= 0) {
+                this.lines[i].classList.add('voice-highlight');
+                if (i === startLine - 1) {
+                    this.lines[i].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            }
+        }
+    }
+
+    clearVoiceHighlight() {
+        this.lines.forEach(el => el.classList.remove('voice-highlight'));
+    }
+
     esc(text) {
         return text
             .replace(/&/g, '&amp;')

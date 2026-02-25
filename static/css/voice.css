@@ -1,0 +1,176 @@
+/* === Voice Drawer (left edge, mirrors log-drawer pattern) === */
+
+#voice-drawer {
+    display: flex;
+    flex-direction: row-reverse; /* toggle button on right edge of drawer */
+    flex-shrink: 0;
+    height: 100%;
+    transition: width 0.2s ease;
+}
+
+#voice-drawer.voice-collapsed {
+    width: 32px;
+}
+
+#voice-drawer.voice-expanded {
+    width: 300px;
+}
+
+#voice-toggle {
+    width: 32px;
+    background: var(--bg-secondary);
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: color 0.12s, background 0.12s;
+    padding: 0;
+}
+
+#voice-toggle:hover {
+    color: var(--accent);
+    background: var(--bg-hover);
+}
+
+#voice-drawer-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 0;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+}
+
+#voice-drawer.voice-expanded #voice-drawer-content {
+    width: auto;
+    opacity: 1;
+}
+
+.voice-header {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#voice-cost {
+    font-family: "SF Mono", "Fira Code", Menlo, monospace;
+    font-size: 11px;
+    color: var(--green);
+}
+
+#voice-transcript {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-hover) transparent;
+}
+
+#voice-transcript::-webkit-scrollbar { width: 6px; }
+#voice-transcript::-webkit-scrollbar-thumb { background: var(--bg-hover); border-radius: 3px; }
+
+.transcript-entry {
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(69, 71, 90, 0.3);
+}
+
+.transcript-entry .role-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.transcript-entry.agent .role-label {
+    color: var(--accent);
+}
+
+.transcript-entry.user .role-label {
+    color: var(--green);
+}
+
+.transcript-entry .transcript-text {
+    color: var(--text-primary);
+    word-wrap: break-word;
+}
+
+#voice-status {
+    padding: 6px 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.voice-controls {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+#voice-mic-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 2px solid var(--border);
+    color: var(--text-primary);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+#voice-mic-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+}
+
+#voice-mic-btn.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: var(--bg-primary);
+    animation: voice-pulse 1.5s infinite;
+}
+
+@keyframes voice-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(243, 139, 168, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(243, 139, 168, 0); }
+}
+
+/* Voice highlight on code lines (does not conflict with .active) */
+.code-line.voice-highlight {
+    background: rgba(137, 180, 250, 0.12);
+    border-left-color: var(--accent);
+}
+
+/* Hide voice drawer on mobile */
+@media (max-width: 768px) {
+    #voice-drawer {
+        display: none;
+    }
+}

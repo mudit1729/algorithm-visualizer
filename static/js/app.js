@@ -486,6 +486,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // --- Expose for voice.js integration ---
+    window.algoPlayer = player;
+    window.codePanel = codePanel;
+    window.getSelectedProblem = () => selectedProblem;
+
     // --- Init: load problem list and build showcase ---
     async function init() {
         const res = await fetch('/api/problems');

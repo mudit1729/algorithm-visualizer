@@ -6,6 +6,9 @@ class Player {
         this.intervalId = null;
         this.speedMs = 400;
         this.onStepChanged = onStepChanged;
+        this.onExternalNotify = null;   // set by voice.js for bidirectional sync
+        this._suppressExternal = false; // true during voice-agent-driven actions
+        this._rangeTarget = undefined;
     }
 
     load(steps) {
@@ -95,6 +98,34 @@ class Player {
         }
     }
 
+    playRange(fromIndex, toIndex) {
+        if (this.steps.length === 0) return Promise.resolve();
+        fromIndex = Math.max(0, Math.min(fromIndex, this.steps.length - 1));
+        toIndex = Math.max(0, Math.min(toIndex, this.steps.length - 1));
+
+        this.pause();
+        this.currentIndex = fromIndex;
+        this._rangeTarget = toIndex;
+        this.isPlaying = true;
+        this.intervalId = setInterval(() => this._rangeStep(), this.speedMs);
+        this.notify();
+    }
+
+    _rangeStep() {
+        if (this._rangeTarget !== undefined && this.currentIndex >= this._rangeTarget) {
+            this._rangeTarget = undefined;
+            this.pause();
+            return;
+        }
+        if (this.currentIndex < this.steps.length - 1) {
+            this.currentIndex++;
+            this.notify();
+        } else {
+            this._rangeTarget = undefined;
+            this.pause();
+        }
+    }
+
     notify() {
         if (this.steps.length > 0) {
             this.onStepChanged(
@@ -103,6 +134,9 @@ class Player {
                 this.steps.length,
                 this.isPlaying
             );
+            if (this.onExternalNotify && !this._suppressExternal) {
+                this.onExternalNotify(this.currentIndex, this.steps.length, this.isPlaying);
+            }
         }
     }
 
