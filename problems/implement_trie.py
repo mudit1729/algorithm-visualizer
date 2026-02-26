@@ -86,6 +86,18 @@ class ImplementTrie(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: A Trie (prefix tree) stores strings character by character in a tree structure. Each node has up to 26 children (for lowercase letters) and a boolean marking end-of-word. Insert walks/creates nodes, search checks existence, and startsWith checks prefix existence.
+
+Time Complexity: O(L) for insert, search, and startsWith, where L is the word/prefix length.
+
+Space Complexity: O(N × L) total for N words of average length L (worst case, no shared prefixes).
+
+Key Insight: Tries excel at prefix-based operations that hash maps cannot do efficiently: autocomplete, spell-checking, and prefix matching. Each shared prefix is stored only once.
+
+Interview Tip: Implement with a dictionary (hash map) for children rather than a fixed-size array — it's cleaner in Python and handles any character set. The is_end flag is essential to distinguish "app" (a complete word) from "apple" (where "app" is just a prefix)."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

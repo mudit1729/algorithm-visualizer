@@ -76,6 +76,18 @@ class CourseScheduleII(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find a valid order to take all courses (topological sort). Use Kahn's algorithm: start with all courses having in-degree 0, process them, reduce neighbors' in-degrees, and add new zero-in-degree courses to the queue. The processing order is a valid topological sort.
+
+Time Complexity: O(V + E) where V is courses and E is prerequisites.
+
+Space Complexity: O(V + E) for the adjacency list, in-degree array, and queue.
+
+Key Insight: Kahn's algorithm naturally produces a topological ordering. If the result contains fewer than V nodes, a cycle exists and no valid ordering is possible.
+
+Interview Tip: Both DFS (reverse post-order) and BFS (Kahn's) produce topological sorts. Kahn's is often preferred in interviews because it also naturally detects cycles and is iterative (no recursion depth issues)."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

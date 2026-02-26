@@ -70,6 +70,18 @@ class LevelOrderTraversal(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Traverse a binary tree level by level using BFS. Use a queue: start with the root, then for each level, process all nodes in the queue, adding their children for the next level. Group nodes by level.
+
+Time Complexity: O(N) where N is the number of nodes — each node visited once.
+
+Space Complexity: O(W) where W is the maximum width of the tree (the largest level). For a complete binary tree, this is O(N/2) = O(N).
+
+Key Insight: The "trick" for grouping by level is to record the queue size at the start of each level. Process exactly that many nodes, and any new nodes added go to the next level.
+
+Interview Tip: Level-order traversal (BFS) is the foundation for many tree problems: zigzag traversal, right side view, average of levels, largest value in each row. Master this pattern."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

@@ -76,6 +76,18 @@ class NetworkDelayTime(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: This is a direct application of Dijkstra's algorithm. Model the network as a weighted directed graph and find the shortest path from the source to all nodes. The answer is the maximum shortest path distance — the time for the signal to reach the farthest node.
+
+Time Complexity: O((V + E) log V) using Dijkstra's with a min-heap.
+
+Space Complexity: O(V + E) for the adjacency list and distance array.
+
+Key Insight: If any node is unreachable (distance remains infinity), return -1. Otherwise, the answer is max(dist[v] for all v), since all signals propagate simultaneously.
+
+Interview Tip: This problem tests whether you can recognize the underlying shortest path problem and choose the right algorithm."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         import heapq
 

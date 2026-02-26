@@ -98,6 +98,18 @@ class WordSearchII(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find all words from a dictionary that exist in the grid. Build a Trie from the word list, then DFS from every cell using the Trie to guide the search. This avoids redundant searches — shared prefixes are explored only once.
+
+Time Complexity: O(M × N × 3^L) in the worst case, but the Trie prunes massively in practice.
+
+Space Complexity: O(W × L) for the Trie where W is the number of words and L is average word length.
+
+Key Insight: Without a Trie, you'd need a separate DFS for each word — O(W × M × N × 3^L). With a Trie, shared prefixes are searched once. Pruning Trie branches after finding a word further speeds up the search.
+
+Interview Tip: This is a classic Trie + backtracking combination. Remember to remove found words from the Trie to avoid duplicates and prune empty branches for efficiency."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

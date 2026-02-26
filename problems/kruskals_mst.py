@@ -82,6 +82,18 @@ class KruskalsMST(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Kruskal's algorithm builds a Minimum Spanning Tree by sorting all edges by weight and greedily adding the cheapest edge that doesn't create a cycle. Uses Union-Find (Disjoint Set Union) to efficiently detect cycles.
+
+Time Complexity: O(E log E) dominated by sorting edges. Union-Find operations are nearly O(1) amortized with path compression and union by rank.
+
+Space Complexity: O(V + E) for the Union-Find structure and edge list.
+
+Key Insight: By always choosing the cheapest available edge that connects two different components, Kruskal's builds the MST greedily. The cut property guarantees this greedy choice is optimal.
+
+Interview Tip: Kruskal's is often easier to code than Prim's since you just sort edges and use Union-Find. It's the go-to when you already have an edge list."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

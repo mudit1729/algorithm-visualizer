@@ -77,6 +77,18 @@ class RedundantConnection(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the edge that, when removed, makes the graph a tree (connected and acyclic). Process edges one by one using Union-Find. The first edge that connects two already-connected nodes creates a cycle — that's the redundant connection.
+
+Time Complexity: O(N × α(N)) ≈ O(N) where α is the inverse Ackermann function (nearly constant with path compression and union by rank).
+
+Space Complexity: O(N) for the Union-Find structure.
+
+Key Insight: A tree with N nodes has exactly N-1 edges. We're given N edges, so exactly one creates a cycle. Union-Find detects the cycle edge in the order edges are given — the last such edge is the answer.
+
+Interview Tip: Union-Find is the cleanest approach here. The problem guarantees exactly one redundant edge, making it straightforward. The follow-up (directed graph) is much harder — look up Redundant Connection II."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

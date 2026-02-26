@@ -86,6 +86,18 @@ class AccountsMerge(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Merge accounts that share at least one common email using Union-Find. For each account, union all its emails together. Then group emails by their root representative to form merged accounts. Sort emails within each group.
+
+Time Complexity: O(N × L × α(N)) where N is total emails and L is the average email length (for hashing), α is the inverse Ackermann function.
+
+Space Complexity: O(N × L) for the Union-Find mapping and merged accounts.
+
+Key Insight: This is a connected components problem — two accounts are connected if they share an email. Union-Find efficiently merges these sets. Map emails to a representative, then group by representative.
+
+Interview Tip: DFS/BFS on an email graph also works but Union-Find is cleaner. Remember to track which name belongs to each email — the first account that mentions an email determines the name."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

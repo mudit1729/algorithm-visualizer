@@ -83,6 +83,18 @@ class NumberOfProvinces(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Count the number of connected components in an undirected graph given as an adjacency matrix. Each province is a connected component. Use DFS, BFS, or Union-Find to group connected cities.
+
+Time Complexity: O(N²) where N is the number of cities — we scan the adjacency matrix.
+
+Space Complexity: O(N) for the visited array or Union-Find structure.
+
+Key Insight: Despite the "cities and provinces" framing, this is a standard connected components problem. The adjacency matrix isConnected[i][j] = 1 means cities i and j are directly connected.
+
+Interview Tip: This is essentially the same as Number of Islands but on a graph instead of a grid. Union-Find is especially clean here — union all pairs where isConnected[i][j] = 1, then count distinct roots."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

@@ -72,6 +72,18 @@ class IsBipartite(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Determine if a graph can be 2-colored such that no adjacent nodes share the same color. BFS or DFS: assign color 0 to the starting node, alternate colors for neighbors. If any neighbor has the same color as the current node, the graph is not bipartite.
+
+Time Complexity: O(V + E) — standard graph traversal.
+
+Space Complexity: O(V) for the color array and BFS queue.
+
+Key Insight: A graph is bipartite if and only if it contains no odd-length cycles. Two-coloring via BFS/DFS detects odd cycles implicitly — they manifest as a neighbor having the same color.
+
+Interview Tip: Don't forget to handle disconnected graphs — start BFS/DFS from every unvisited node. A single connected component being non-bipartite makes the whole graph non-bipartite."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

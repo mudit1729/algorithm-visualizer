@@ -85,6 +85,18 @@ class AlienDictionary(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Derive character ordering from a sorted list of alien words. Compare adjacent words to find ordering constraints (the first differing character tells us a < b). Build a directed graph of character orderings and topological sort it.
+
+Time Complexity: O(C) where C is the total number of characters across all words — we examine each character to build the graph, then topological sort.
+
+Space Complexity: O(1) or O(26²) for the character graph — bounded by alphabet size.
+
+Key Insight: Each pair of adjacent words gives us at most one ordering constraint. If word A is a prefix of word B but longer, the ordering is invalid. The final alphabet is the topological sort of the constraint graph.
+
+Interview Tip: Watch for edge cases: words where one is a prefix of another (invalid if the longer word comes first), characters with no ordering constraints (can go anywhere), and cycles (no valid ordering)."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

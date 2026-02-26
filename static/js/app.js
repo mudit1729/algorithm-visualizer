@@ -330,6 +330,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Load code
             codePanel.loadCode(data.source_code);
 
+            // Load problem content (question + theory)
+            loadProblemPanel(selectedProblem);
+
             // Wait a frame so the canvas has layout dimensions
             requestAnimationFrame(() => {
                 player.load(data.steps);
@@ -341,6 +344,69 @@ document.addEventListener('DOMContentLoaded', () => {
             visualizeBtn.textContent = 'Visualize';
             visualizeBtn.disabled = false;
         }
+    }
+
+    // --- Code/Problem tab switching ---
+    const codeTabs = document.querySelectorAll('.code-tab');
+    const codeContainer = document.getElementById('code-container');
+    const problemContainer = document.getElementById('problem-container');
+
+    codeTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            codeTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            if (tab.dataset.panel === 'problem') {
+                codeContainer.classList.add('hidden');
+                problemContainer.classList.remove('hidden');
+            } else {
+                problemContainer.classList.add('hidden');
+                codeContainer.classList.remove('hidden');
+            }
+        });
+    });
+
+    function loadProblemPanel(problem) {
+        const questionEl = document.getElementById('problem-question');
+        const theoryEl = document.getElementById('problem-theory');
+
+        // Build question section
+        let questionHtml = '<div class="problem-section-label">Problem</div>';
+        const desc = problem.long_description || problem.description || '';
+        if (desc) {
+            questionHtml += formatDescription(desc);
+        }
+        questionEl.innerHTML = questionHtml;
+
+        // Build theory section
+        let theoryHtml = '<div class="problem-section-label">Theory</div>';
+        const theory = problem.theory || '';
+        if (theory) {
+            // Split theory by double newlines into paragraphs,
+            // detect "Label:" patterns for structured display
+            const blocks = theory.split(/\n\n+/);
+            blocks.forEach(block => {
+                const trimmed = block.trim();
+                if (!trimmed) return;
+                // Check for "Label: content" pattern
+                const labelMatch = trimmed.match(/^([A-Z][A-Za-z\s/]+):\s*([\s\S]+)/);
+                if (labelMatch) {
+                    theoryHtml += `<div class="theory-block"><strong>${escapeHtml(labelMatch[1])}</strong><p>${inlineFmt(labelMatch[2].trim())}</p></div>`;
+                } else {
+                    theoryHtml += `<p>${inlineFmt(trimmed)}</p>`;
+                }
+            });
+        } else {
+            theoryHtml += '<p>No theory available for this problem.</p>';
+        }
+        theoryEl.innerHTML = theoryHtml;
+
+        // Reset to Code tab when loading a new problem
+        codeTabs.forEach(t => t.classList.remove('active'));
+        const codeTab = document.querySelector('.code-tab[data-panel="code"]');
+        if (codeTab) codeTab.classList.add('active');
+        codeContainer.classList.remove('hidden');
+        problemContainer.classList.add('hidden');
     }
 
     // --- Mobile tab switching ---

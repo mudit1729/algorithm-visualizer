@@ -72,9 +72,16 @@
             </div>
             <div id="divider"></div>
             <div id="code-panel">
-                <div class="code-header">Code</div>
+                <div class="code-header">
+                    <button class="code-tab active" data-panel="code">Code</button>
+                    <button class="code-tab" data-panel="problem">Problem</button>
+                </div>
                 <div id="code-container">
                     <pre id="code-display"></pre>
+                </div>
+                <div id="problem-container" class="hidden">
+                    <div id="problem-question"></div>
+                    <div id="problem-theory"></div>
                 </div>
             </div>
             <!-- Log drawer on the right edge -->

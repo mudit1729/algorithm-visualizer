@@ -67,6 +67,18 @@ class MinPathSum(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the path from top-left to bottom-right with minimum sum, moving only right or down. DP recurrence: dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1]). Fill the table row by row.
+
+Time Complexity: O(M × N) — visit each cell once.
+
+Space Complexity: O(1) if modifying the grid in-place, O(N) with a 1D DP array, or O(M × N) for a full table.
+
+Key Insight: Unlike Unique Paths (counting), this minimizes a sum. The structure is identical — each cell's optimal value depends only on the cell above and to the left.
+
+Interview Tip: Can be done in-place by overwriting the grid. If the interviewer asks about arbitrary directions (not just right/down), it becomes a shortest path problem requiring Dijkstra's."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

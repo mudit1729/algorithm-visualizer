@@ -83,6 +83,18 @@ class MaxProbabilityPath(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the path with maximum probability between two nodes. This is a shortest path variant where we maximize the product of probabilities instead of minimizing the sum of weights. Use a modified Dijkstra's with a max-heap.
+
+Time Complexity: O((V + E) log V) using Dijkstra's with a max-heap.
+
+Space Complexity: O(V + E) for the adjacency list and probability array.
+
+Key Insight: Since probabilities multiply along a path and are between 0 and 1, we can use a max-heap (negate probabilities for a min-heap) and "relax" edges by checking if prob[u] × weight > prob[v].
+
+Interview Tip: The key insight is recognizing this as a Dijkstra's variant. Alternatively, you could take log of probabilities to convert multiplication to addition and use standard shortest path."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

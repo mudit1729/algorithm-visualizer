@@ -79,6 +79,18 @@ class EvaluateDivision(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Model equations as a weighted directed graph where a/b = k creates edges a→b with weight k and b→a with weight 1/k. To evaluate x/y, find a path from x to y and multiply the edge weights along the path using BFS or DFS.
+
+Time Complexity: O(Q × (V + E)) where Q is the number of queries, V is variables, E is equations.
+
+Space Complexity: O(V + E) for the graph.
+
+Key Insight: Division forms a graph: if a/b = 2 and b/c = 3, then a/c = 2 × 3 = 6 (path multiplication). If no path exists between two variables, the answer is -1.0.
+
+Interview Tip: Union-Find with weighted edges also works. The graph approach is more intuitive — think of each variable as a node and each equation as a bidirectional weighted edge."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

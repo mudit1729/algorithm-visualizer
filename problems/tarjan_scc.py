@@ -100,6 +100,18 @@ class TarjanSCC(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Tarjan's algorithm finds all Strongly Connected Components (SCCs) in a directed graph using a single DFS. It maintains a discovery time and a low-link value for each node. Nodes are pushed onto a stack during DFS and popped as complete SCCs when a root node is found.
+
+Time Complexity: O(V + E) — a single DFS traversal.
+
+Space Complexity: O(V) for the stack, discovery/low arrays, and on-stack flags.
+
+Key Insight: A node u is the root of an SCC if its low-link value equals its discovery time after processing all descendants. All nodes on the stack above u (inclusive) form one SCC.
+
+Interview Tip: Tarjan's finds SCCs in one pass (vs. Kosaraju's two passes). The tricky part is understanding low-link values — they track the earliest reachable ancestor through back edges."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

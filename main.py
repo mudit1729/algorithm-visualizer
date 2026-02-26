@@ -152,6 +152,7 @@ def list_problems():
                 "subtopic": cls.subtopic(),
                 "description": cls.description(),
                 "long_description": cls.long_description(),
+                "theory": cls.theory(),
                 "renderer_type": cls.renderer_type(),
                 "default_params": cls.default_params(),
             }

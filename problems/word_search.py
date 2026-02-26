@@ -81,6 +81,18 @@ class WordSearch(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Search for a word in a 2D grid by DFS with backtracking. From each cell matching the first character, explore all 4 directions recursively. Mark cells as visited during exploration and unmark when backtracking to allow other paths.
+
+Time Complexity: O(M × N × 3^L) where L is word length — from each cell, we branch into at most 3 directions (can't go back to the previous cell).
+
+Space Complexity: O(L) for recursion depth, plus O(M×N) if using a separate visited array.
+
+Key Insight: The backtracking (marking/unmarking) is essential — the same cell can appear in different paths for different starting positions. Temporarily modifying the grid cell (e.g., setting to '#') avoids extra space.
+
+Interview Tip: Prune early — if the current cell doesn't match the expected character, return immediately. This makes the practical runtime much better than the worst case."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

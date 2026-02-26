@@ -91,6 +91,18 @@ class SwimInRisingWater(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the minimum time to swim from top-left to bottom-right, where time t lets you traverse any cell with elevation ≤ t. This is a shortest-path variant: use Dijkstra's (or binary search + BFS) where the "distance" to each cell is the maximum elevation along the path to it.
+
+Time Complexity: O(N² log N) with Dijkstra's (binary heap on N² cells).
+
+Space Complexity: O(N²) for the distance array and heap.
+
+Key Insight: Unlike standard shortest path (sum of weights), here we minimize the maximum edge weight (bottleneck path). Dijkstra's works because we always expand the cell with the smallest required time.
+
+Interview Tip: Three approaches work: Dijkstra's (most natural), binary search + BFS (binary search on answer t, check if path exists using only cells ≤ t), or Union-Find (process cells in elevation order, connect until source and sink are connected)."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

@@ -82,6 +82,18 @@ class PacificAtlantic(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find cells that can reach both the Pacific (top/left edges) and Atlantic (bottom/right edges) oceans. Instead of flowing water downhill from every cell, reverse the flow — BFS/DFS uphill from each ocean's boundary. A cell in both reachable sets can reach both oceans.
+
+Time Complexity: O(M × N) — two BFS/DFS passes, each visiting cells at most once.
+
+Space Complexity: O(M × N) for two visited matrices.
+
+Key Insight: Reversing the flow direction transforms the problem from "can water flow from cell to ocean?" to "can ocean reach cell going uphill?" This eliminates redundant DFS from interior cells.
+
+Interview Tip: The reverse-flow technique is a classic optimization. Similarly to Surrounded Regions, starting from the boundary is much more efficient than starting from every cell."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

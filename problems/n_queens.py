@@ -84,6 +84,18 @@ class NQueens(Problem):
         return {"n": 8}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Place N queens on an N×N chessboard so no two queens threaten each other. Use backtracking: try placing a queen in each column of the current row, check if it's safe (no conflicts with queens in previous rows), and recurse. If stuck, backtrack and try the next column.
+
+Time Complexity: O(N!) — the first row has N choices, the second has at most N-1, etc.
+
+Space Complexity: O(N) for the board state and recursion stack.
+
+Key Insight: To check safety efficiently, track which columns, main diagonals (row-col), and anti-diagonals (row+col) are occupied. This gives O(1) conflict checking instead of scanning all placed queens.
+
+Interview Tip: N-Queens is THE classic backtracking problem. The optimization of using sets for columns and diagonals is a common follow-up. For N=8, there are 92 solutions."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         n = int(kwargs.get("n", 8))
         tracer = Board2DTracer(n, n)

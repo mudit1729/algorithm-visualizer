@@ -72,6 +72,18 @@ class CourseSchedule(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Detect if a cycle exists in a directed graph (course prerequisite graph). If there's a cycle, not all courses can be completed. Use DFS with three states: unvisited, in-progress, and completed. A back edge (visiting an in-progress node) indicates a cycle.
+
+Time Complexity: O(V + E) where V is the number of courses and E is the number of prerequisites.
+
+Space Complexity: O(V + E) for the adjacency list and state array.
+
+Key Insight: A directed graph has a valid topological ordering (all courses can be taken) if and only if it has no cycles. DFS cycle detection with three-coloring is the standard approach.
+
+Interview Tip: This is the foundation for topological sort problems. Kahn's algorithm (BFS with in-degree tracking) also works and can simultaneously detect cycles if the result has fewer than V nodes."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

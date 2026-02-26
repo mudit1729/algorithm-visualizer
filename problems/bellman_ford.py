@@ -66,6 +66,18 @@ class BellmanFord(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Bellman-Ford finds shortest paths from a source vertex to all other vertices, even with negative edge weights. It repeatedly relaxes all edges V-1 times. After V-1 iterations, if any edge can still be relaxed, a negative-weight cycle exists.
+
+Time Complexity: O(V × E) where V is the number of vertices and E is the number of edges.
+
+Space Complexity: O(V) for the distance array.
+
+Key Insight: After k iterations, the algorithm has found all shortest paths using at most k edges. Since the shortest path in a graph with no negative cycles has at most V-1 edges, V-1 iterations suffice.
+
+Interview Tip: The extra V-th iteration is the classic way to detect negative cycles. If you only need to detect reachable negative cycles, check if any distance decreases on the V-th pass."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

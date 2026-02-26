@@ -86,6 +86,18 @@ class AddSearchWords(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Use a Trie to store words and support search with '.' wildcards. Insert is standard Trie insertion. Search uses DFS: for regular characters, follow the specific child; for '.', branch to ALL children and return true if any path matches.
+
+Time Complexity: O(L) for insert. O(26^L) worst case for search with all dots, but typically much faster with mixed characters.
+
+Space Complexity: O(N × L) for the Trie.
+
+Key Insight: The '.' wildcard requires exploring multiple branches — this is where the Trie structure shines over a hash set. Each '.' multiplies the search paths by up to 26.
+
+Interview Tip: This combines Trie with backtracking/DFS. The search function must be recursive (or use a stack) because '.' requires exploring multiple paths. Without wildcards, a simple hash set would suffice."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

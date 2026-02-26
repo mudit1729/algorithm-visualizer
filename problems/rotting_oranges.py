@@ -83,6 +83,18 @@ class RottingOranges(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Multi-source BFS from all initially rotten oranges. Each BFS layer represents one minute of spreading. Add all rotten oranges to the queue initially, then BFS level-by-level. Track the number of minutes (BFS levels) until no fresh oranges remain.
+
+Time Complexity: O(M × N) — each cell processed at most once.
+
+Space Complexity: O(M × N) for the queue.
+
+Key Insight: This is the same pattern as Walls and Gates — multi-source BFS where all sources start simultaneously. The number of BFS levels minus one is the answer. If fresh oranges remain after BFS, return -1.
+
+Interview Tip: Count fresh oranges at the start. Each time you rot one, decrement the counter. If the counter is still positive after BFS, some oranges are unreachable."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

@@ -88,6 +88,18 @@ class EqualityEquations(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Check if a set of equality (==) and inequality (!=) constraints are satisfiable. First, union all variables connected by equality. Then check all inequality constraints — if two variables in the same union set have a != constraint, it's unsatisfiable.
+
+Time Complexity: O(N × α(N)) ≈ O(N) for N equations.
+
+Space Complexity: O(1) — at most 26 variables (lowercase letters).
+
+Key Insight: Process equalities before inequalities. Equalities create equivalence classes (union them). Then verify no inequality contradicts these classes. Order matters — union first, check second.
+
+Interview Tip: The two-pass approach (equalities first, then inequalities) is the key insight. Trying to process them in order would require backtracking. Fixed 26-variable universe means constant space."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

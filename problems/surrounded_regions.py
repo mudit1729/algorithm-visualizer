@@ -78,6 +78,18 @@ class SurroundedRegions(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Capture all 'O' regions that are completely surrounded by 'X'. Key insight: instead of finding surrounded regions directly, find the UN-surrounded ones. Any 'O' connected to the border cannot be captured. DFS/BFS from all border 'O's, mark them safe, then flip all remaining 'O's to 'X'.
+
+Time Complexity: O(M × N) — each cell visited at most twice.
+
+Space Complexity: O(M × N) for the visited/marking array.
+
+Key Insight: Think in reverse — it's easier to find what NOT to capture. Border-connected 'O's survive; everything else gets captured. This avoids complex containment checks.
+
+Interview Tip: The "think in reverse" pattern appears in many grid problems. Start from the boundary and work inward rather than checking each region individually."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

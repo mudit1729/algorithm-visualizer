@@ -89,6 +89,18 @@ class ArticulationPoints(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find all articulation points (cut vertices) in an undirected graph using Tarjan's DFS algorithm. Track discovery time and low-link values. A node u is an articulation point if: (1) u is the root of DFS and has 2+ children, or (2) u is not root and has a child v where low[v] >= disc[u].
+
+Time Complexity: O(V + E) — a single DFS traversal.
+
+Space Complexity: O(V + E) for the adjacency list and arrays.
+
+Key Insight: An articulation point's removal disconnects the graph. The condition low[v] >= disc[u] means child v cannot reach any ancestor of u through a back edge, so u is the only connection between its parent side and v's subtree.
+
+Interview Tip: Remember the two separate cases — root nodes need 2+ DFS children, non-root nodes use the low-link condition. This is a common distinction interviewers test."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

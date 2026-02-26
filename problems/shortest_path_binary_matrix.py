@@ -76,6 +76,18 @@ class ShortestPathBinaryMatrix(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: BFS from the top-left to bottom-right corner of a binary grid, moving in all 8 directions (including diagonals). BFS guarantees the shortest path in an unweighted graph. Return the path length (number of cells) or -1 if unreachable.
+
+Time Complexity: O(N²) where N is the grid dimension — each cell visited at most once.
+
+Space Complexity: O(N²) for the visited array and queue.
+
+Key Insight: BFS on an unweighted grid gives shortest path. The 8-directional movement (including diagonals) is the key difference from typical 4-directional grid BFS.
+
+Interview Tip: Always check the start and end cells first — if either is blocked (value 1), return -1 immediately. This handles edge cases cleanly."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

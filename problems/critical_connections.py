@@ -85,6 +85,18 @@ class CriticalConnections(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find all bridges (critical connections) in an undirected graph using Tarjan's bridge-finding algorithm. Perform DFS and track discovery time and low-link values. An edge (u, v) is a bridge if low[v] > disc[u] — meaning v cannot reach u or any ancestor of u without using edge (u, v).
+
+Time Complexity: O(V + E) — a single DFS traversal.
+
+Space Complexity: O(V + E) for the adjacency list and DFS arrays.
+
+Key Insight: A bridge disconnects the graph when removed. The low-link value tells us the earliest discoverable ancestor. If a child's low-link is strictly greater than the parent's discovery time, removing that edge disconnects the child's subtree.
+
+Interview Tip: Don't confuse with articulation points (nodes). For bridges, the condition is low[v] > disc[u] (strict), while for articulation points it's low[v] >= disc[u]."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

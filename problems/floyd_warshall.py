@@ -69,6 +69,18 @@ class FloydWarshall(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Floyd-Warshall computes shortest paths between all pairs of vertices. It considers each vertex k as a potential intermediate node and checks if the path through k improves the current shortest path between every pair (i, j).
+
+Time Complexity: O(V³) — three nested loops over all vertices.
+
+Space Complexity: O(V²) for the distance matrix.
+
+Key Insight: The key recurrence is dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]). The order of the outermost loop (over k) is critical — it must iterate over intermediate vertices.
+
+Interview Tip: Floyd-Warshall is ideal when you need all-pairs shortest paths or when the graph is dense. For single-source shortest paths, Dijkstra's or Bellman-Ford is more efficient."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

@@ -108,6 +108,18 @@ class MakingLargeIsland(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the largest island achievable by changing at most one 0 to 1. First, label each island with a unique ID and compute its size using DFS/BFS. Then, for each 0-cell, check its 4 neighbors' island IDs, sum the distinct island sizes + 1, and track the maximum.
+
+Time Complexity: O(M × N) — two passes over the grid.
+
+Space Complexity: O(M × N) for island labels and size mapping.
+
+Key Insight: Two-pass approach: (1) label all islands and record sizes, (2) for each water cell, check which distinct islands are adjacent and sum their sizes. Using island IDs prevents double-counting when the same island borders a cell from multiple directions.
+
+Interview Tip: The edge case where the entire grid is land (no 0 to flip) must be handled — return M×N. The dedup using island IDs (not just sizes) is the common mistake interviewers watch for."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

@@ -81,6 +81,18 @@ class TaskScheduler(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Determine the minimum time to execute all tasks with a cooldown constraint. The most frequent task determines the structure — arrange tasks in rounds of length (cooldown + 1). Fill slots with the most frequent tasks first, then fill remaining slots or add idle time.
+
+Time Complexity: O(N) where N is the number of tasks (counting and sorting is bounded by 26 task types).
+
+Space Complexity: O(1) — only 26 possible task types.
+
+Key Insight: The answer is max(N, (maxFreq - 1) × (cooldown + 1) + countOfMaxFreq). The first term handles the case when there are enough tasks to fill all idle slots; the second calculates the minimum time based on the most frequent task.
+
+Interview Tip: This is a greedy/math problem, not a simulation. Draw the grid pattern: (maxFreq-1) rows of (cooldown+1) slots, plus a final partial row. Understanding this visual layout makes the formula intuitive."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

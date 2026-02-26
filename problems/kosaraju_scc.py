@@ -106,6 +106,18 @@ class KosarajuSCC(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Kosaraju's algorithm finds Strongly Connected Components using two DFS passes. First pass: DFS on the original graph, pushing nodes onto a stack in finish order. Second pass: DFS on the reversed graph, processing nodes in reverse finish order. Each DFS tree in pass 2 is one SCC.
+
+Time Complexity: O(V + E) — two DFS traversals plus graph reversal.
+
+Space Complexity: O(V + E) for the reversed graph, stack, and visited arrays.
+
+Key Insight: If node u can reach node v in the original graph, and v can reach u in the reversed graph, they are in the same SCC. Processing in reverse finish order ensures we start each second-pass DFS from an SCC root.
+
+Interview Tip: Kosaraju's is conceptually simpler than Tarjan's — just "DFS, reverse, DFS again." It's often preferred in interviews because it's easier to explain and implement correctly."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

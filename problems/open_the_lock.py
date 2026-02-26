@@ -78,6 +78,18 @@ class OpenTheLock(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: BFS from the initial state "0000" to the target combination, where each move turns one wheel one position up or down. Each state has 8 neighbors (4 wheels × 2 directions). Deadend states are pre-marked as visited.
+
+Time Complexity: O(10⁴ × 8) = O(80,000) — at most 10,000 states, each with 8 neighbors.
+
+Space Complexity: O(10⁴) for the visited set.
+
+Key Insight: This is shortest path in an implicit graph where nodes are 4-digit strings and edges connect states differing in one digit by ±1. BFS gives the minimum number of turns.
+
+Interview Tip: The "state space BFS" pattern appears in many puzzles — locks, word ladders, sliding puzzles. The key is defining the state, its neighbors, and marking visited states efficiently."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

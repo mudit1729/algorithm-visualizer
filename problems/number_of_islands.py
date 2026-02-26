@@ -87,6 +87,18 @@ class NumberOfIslands(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Count connected components of '1's in a 2D grid using DFS or BFS. For each unvisited '1', increment the island count and flood-fill (mark as visited) all connected '1's reachable by moving up, down, left, or right.
+
+Time Complexity: O(M × N) where M and N are grid dimensions — each cell is visited at most once.
+
+Space Complexity: O(M × N) for the visited array (or O(min(M,N)) for BFS queue in the worst case). DFS recursion depth can be O(M × N) in worst case.
+
+Key Insight: This is a connected components problem on a grid. Each DFS/BFS from an unvisited land cell discovers one complete island.
+
+Interview Tip: You can modify the grid in-place (mark '1' → '0') to avoid extra space. Union-Find also works and is useful if cells are added dynamically."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
         grid_template = _GRIDS.get(grid_id, _GRIDS[1])

@@ -67,6 +67,18 @@ class UniquePaths(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Count the number of unique paths from top-left to bottom-right of a grid, moving only right or down. Use dynamic programming: dp[i][j] = dp[i-1][j] + dp[i][j-1]. The first row and column are all 1's (only one way to reach them).
+
+Time Complexity: O(M × N) — fill the entire DP table.
+
+Space Complexity: O(N) with space optimization (only need the previous row), or O(M × N) for the full table.
+
+Key Insight: This is a combinatorial problem: the answer is C(m+n-2, m-1) = (m+n-2)! / ((m-1)! × (n-1)!). DP avoids computing large factorials and generalizes to grids with obstacles.
+
+Interview Tip: Mention the math formula as an O(min(m,n)) alternative. If the interviewer adds obstacles, the DP approach handles it naturally by setting dp[i][j] = 0 for blocked cells."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

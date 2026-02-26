@@ -62,3 +62,8 @@ class Problem(ABC):
     def long_description() -> str:
         """Full problem statement shown in the detail panel. Override per problem."""
         return ""
+
+    @staticmethod
+    def theory() -> str:
+        """Algorithm theory, complexity, and key insights. Override per problem."""
+        return ""

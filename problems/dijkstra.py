@@ -70,6 +70,18 @@ class Dijkstra(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Dijkstra's algorithm finds the shortest path from a source node to all other nodes in a weighted graph with non-negative edge weights. It uses a min-heap (priority queue) to always process the closest unvisited node first, then relaxes all its outgoing edges.
+
+Time Complexity: O((V + E) log V) with a binary heap, where V is the number of vertices and E is the number of edges.
+
+Space Complexity: O(V) for the distance array and visited set, plus O(V) for the priority queue.
+
+Key Insight: The greedy choice — always expanding the node with the smallest known distance — is safe because all edge weights are non-negative, so no future path through unvisited nodes can be shorter.
+
+Interview Tip: If the interviewer mentions negative weights, Dijkstra's won't work — switch to Bellman-Ford. If they ask for the actual path (not just distance), maintain a predecessor array."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         import heapq
 

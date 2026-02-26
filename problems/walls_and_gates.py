@@ -73,6 +73,18 @@ class WallsAndGates(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Multi-source BFS from all gates simultaneously. Start by adding all gate positions (cells with value 0) to a queue, then BFS outward. Each empty room gets filled with its distance to the nearest gate on first visit.
+
+Time Complexity: O(M × N) — each cell is enqueued and processed at most once.
+
+Space Complexity: O(M × N) for the BFS queue (worst case all cells are gates).
+
+Key Insight: Multi-source BFS finds shortest distances from any source simultaneously, like dropping stones into a pond and letting the ripples expand. Each cell is reached by whichever gate is closest.
+
+Interview Tip: Single-source BFS from each gate would be O(M²N²). Multi-source BFS from all gates at once is the key optimization — it's O(MN) because each cell is visited exactly once."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
         INF = 2147483647

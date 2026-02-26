@@ -82,6 +82,18 @@ class SlidingPuzzle(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: BFS on the state space of the puzzle board. Each state is a board configuration (encoded as a string). From each state, swap the blank tile (0) with each adjacent tile to generate neighbor states. BFS finds the minimum number of moves.
+
+Time Complexity: O(6! × 6) = O(4,320) — at most 720 unique board states, each with up to 4 neighbors.
+
+Space Complexity: O(6!) for the visited set of board states.
+
+Key Insight: Represent the board as a string for easy hashing. Precompute the neighbors of each position. BFS on this implicit graph guarantees the minimum number of moves.
+
+Interview Tip: State-space BFS problems always follow the pattern: encode state → generate neighbors → check visited → BFS. The challenge is choosing an efficient state representation."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

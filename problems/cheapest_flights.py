@@ -70,6 +70,18 @@ class CheapestFlights(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the cheapest flight path with at most K stops. This is a modified Bellman-Ford / BFS problem. Run at most K+1 relaxation rounds (since K stops means K+1 edges). Each round, relax all edges using the distances from the previous round to avoid using too many edges.
+
+Time Complexity: O(K × E) where K is the max stops and E is the number of flights.
+
+Space Complexity: O(V) for the distance array.
+
+Key Insight: Unlike standard Dijkstra's, we can't just greedily expand the closest node because the hop limit constraint means a longer-distance path with fewer hops might be better. Using a copy of the distance array per round prevents counting extra hops.
+
+Interview Tip: Three approaches work: modified Bellman-Ford (simplest), BFS with pruning, or Dijkstra's with a state of (cost, node, stops_remaining)."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         preset = int(kwargs.get("preset", 1))
 

@@ -74,6 +74,18 @@ class PrimsMST(Problem):
         return {"preset": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Prim's algorithm builds a Minimum Spanning Tree by growing a single tree. Start from any node, and repeatedly add the cheapest edge that connects a visited node to an unvisited node. Uses a min-heap to efficiently find the next cheapest edge.
+
+Time Complexity: O((V + E) log V) with a binary heap.
+
+Space Complexity: O(V + E) for the adjacency list, heap, and visited set.
+
+Key Insight: Prim's is essentially Dijkstra's algorithm but instead of tracking cumulative distance, it tracks only the edge weight to each unvisited node. The greedy choice is always safe by the cut property of MSTs.
+
+Interview Tip: Prim's is better for dense graphs (adjacency matrix). For sparse graphs, Kruskal's with Union-Find is often simpler to implement."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         import heapq
 

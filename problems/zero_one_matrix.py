@@ -78,6 +78,18 @@ class ZeroOneMatrix(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Find the distance of each cell to the nearest 0 in a binary matrix. Use multi-source BFS: start from all 0-cells simultaneously and expand outward. Each cell's distance is set when first reached by the BFS wavefront.
+
+Time Complexity: O(M × N) — each cell visited exactly once.
+
+Space Complexity: O(M × N) for the queue and result matrix.
+
+Key Insight: This is the same multi-source BFS pattern as Walls and Gates and Rotting Oranges. Starting from all 0's simultaneously gives the correct distance for every 1-cell in a single pass.
+
+Interview Tip: DP also works (two passes: top-left to bottom-right, then bottom-right to top-left), but multi-source BFS is cleaner and demonstrates BFS mastery."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 

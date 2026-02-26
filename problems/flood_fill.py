@@ -72,6 +72,18 @@ class FloodFill(Problem):
         return {"grid": 1}
 
     @staticmethod
+    def theory() -> str:
+        return """Approach: Starting from a given pixel, change its color and all connected pixels of the same original color to the new color using DFS or BFS. Connected means 4-directionally adjacent (up, down, left, right).
+
+Time Complexity: O(M × N) where M and N are image dimensions — in the worst case, every pixel is the same color.
+
+Space Complexity: O(M × N) for the recursion stack (DFS) or queue (BFS).
+
+Key Insight: This is the algorithm behind the "paint bucket" tool in image editors. DFS is the simplest implementation — recursively fill each valid neighbor.
+
+Interview Tip: Handle the edge case where newColor equals the original color to avoid infinite recursion. Either check upfront and return immediately, or use a visited set."""
+
+    @staticmethod
     def generate_steps(**kwargs: object) -> list[Step]:
         grid_id = int(kwargs.get("grid", 1))
 
